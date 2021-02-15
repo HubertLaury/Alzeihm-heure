@@ -1,0 +1,9 @@
+<resources>
+    <string name="app_name">Alzeihm\'heure</string>
+    <string name="contacts">Membres</string>
+    <string name="calendrier">Calendrier</string>
+    <string name="trajet">Résumé</string>
+    <string name="urgence">Numéros\nutiles</string>
+    <string name="profile">Profile</string>
+    <string name="alerte">Alertes auto</string>
+</resources>
