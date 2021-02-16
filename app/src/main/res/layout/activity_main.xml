@@ -8,74 +8,20 @@
 
     <ImageView
         android:id="@+id/imageContacts"
-        android:layout_width="128dp"
-        android:layout_height="144dp"
-        android:layout_marginStart="40dp"
+        android:layout_width="104dp"
+        android:layout_height="104dp"
+        android:layout_marginStart="56dp"
         android:layout_marginBottom="292dp"
         android:contentDescription="@string/contacts"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:srcCompat="@drawable/contacts" />
 
-    <TextView
-        android:id="@+id/textContacts"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="40dp"
-        android:layout_marginBottom="24dp"
-        android:gravity="center"
-        android:text="@string/contacts"
-        android:textSize="32sp"
-        app:layout_constraintBottom_toTopOf="@+id/imageContacts"
-        app:layout_constraintStart_toStartOf="parent" />
-
-    <TextView
-        android:id="@+id/textRésumé"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="46dp"
-        android:layout_marginTop="40dp"
-        android:layout_marginBottom="40dp"
-        android:gravity="center"
-        android:text="@string/trajet"
-        android:textSize="32sp"
-        app:layout_constraintBottom_toTopOf="@+id/imageHistorique"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imageContacts"
-        app:layout_constraintVertical_bias="0.466" />
-
-    <TextView
-        android:id="@+id/textUrgence"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
-        android:layout_marginEnd="32dp"
-        android:layout_marginBottom="20dp"
-        android:gravity="center"
-        android:text="@string/urgence"
-        android:textSize="32sp"
-        app:layout_constraintBottom_toTopOf="@+id/imageUrgence"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imageCalendrier"
-        app:layout_constraintVertical_bias="0.56" />
-
-    <TextView
-        android:id="@+id/textCalendrier"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="28dp"
-        android:layout_marginBottom="24dp"
-        android:gravity="center"
-        android:text="@string/calendrier"
-        android:textSize="32sp"
-        app:layout_constraintBottom_toTopOf="@+id/imageCalendrier"
-        app:layout_constraintEnd_toEndOf="parent" />
-
     <ImageView
         android:id="@+id/imageCalendrier"
-        android:layout_width="128dp"
-        android:layout_height="144dp"
-        android:layout_marginEnd="40dp"
+        android:layout_width="104dp"
+        android:layout_height="104dp"
+        android:layout_marginEnd="56dp"
         android:layout_marginBottom="292dp"
         android:contentDescription="@string/calendrier"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -84,9 +30,9 @@
 
     <ImageView
         android:id="@+id/imageHistorique"
-        android:layout_width="128dp"
-        android:layout_height="144dp"
-        android:layout_marginStart="40dp"
+        android:layout_width="104dp"
+        android:layout_height="104dp"
+        android:layout_marginStart="48dp"
         android:layout_marginBottom="40dp"
         android:contentDescription="@string/trajet"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -95,9 +41,9 @@
 
     <ImageView
         android:id="@+id/imageUrgence"
-        android:layout_width="128dp"
-        android:layout_height="144dp"
-        android:layout_marginEnd="40dp"
+        android:layout_width="104dp"
+        android:layout_height="104dp"
+        android:layout_marginEnd="48dp"
         android:layout_marginBottom="40dp"
         android:contentDescription="@string/urgence"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -108,9 +54,10 @@
         android:id="@+id/imageProfile"
         android:layout_width="140dp"
         android:layout_height="145dp"
-        android:layout_marginTop="64dp"
+        android:layout_marginTop="88dp"
         android:contentDescription="@string/profile"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/grandfather" />
@@ -125,5 +72,72 @@
         android:textSize="32sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/textView3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:text="@string/Code"
+        android:textSize="32sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <Button
+        android:id="@+id/membres"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="40dp"
+        android:layout_marginBottom="8dp"
+        android:backgroundTint="@color/white"
+        android:textColor="@color/black"
+        android:text="@string/contacts"
+        android:textSize="20sp"
+        app:iconTint="@color/white"
+        app:layout_constraintBottom_toTopOf="@+id/imageContacts"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <Button
+        android:id="@+id/trajet"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="40dp"
+        android:layout_marginBottom="20dp"
+        android:backgroundTint="@color/white"
+        android:text="@string/trajet"
+        android:textColor="@color/black"
+        android:textSize="20sp"
+        app:iconTint="@color/white"
+        app:layout_constraintBottom_toTopOf="@+id/imageHistorique"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <Button
+        android:id="@+id/calendrier"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="24dp"
+        android:layout_marginBottom="8dp"
+        android:backgroundTint="@color/white"
+        android:text="@string/calendrier"
+        android:textColor="@color/black"
+        android:textSize="20sp"
+        app:iconTint="@color/white"
+        app:layout_constraintBottom_toTopOf="@+id/imageCalendrier"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+    <Button
+        android:id="@+id/urgence"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="24dp"
+        android:layout_marginBottom="8dp"
+        android:backgroundTint="@color/white"
+        android:text="@string/urgence"
+        android:textColor="@color/black"
+        android:textSize="20sp"
+        app:iconTint="@color/white"
+        app:layout_constraintBottom_toTopOf="@+id/imageUrgence"
+        app:layout_constraintEnd_toEndOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
