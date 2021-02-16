@@ -42,7 +42,7 @@ class LoginActivity : AppCompatActivity() {
                 parent: AdapterView<*>?, view: View,
                 position: Int, id: Long
             ) {
-                val myRegion = spinner.selectedItem.toString()
+                /*val myRegion = spinner.selectedItem.toString()
                 Toast.makeText(
                     this@LoginActivity,
                     """
@@ -50,7 +50,7 @@ class LoginActivity : AppCompatActivity() {
                         Spinner 1 : $myRegion
                         """.trimIndent(),
                     Toast.LENGTH_SHORT
-                ).show()
+                ).show()*/
             }
 
             override fun onNothingSelected(parent: AdapterView<*>?) {
@@ -58,10 +58,14 @@ class LoginActivity : AppCompatActivity() {
             }
         }
 
-        val button2 = findViewById<Button>(R.id.btnLogin)
+        /*val button2 = findViewById<Button>(R.id.btnLogin)
         button2.setOnClickListener {
             val intent = Intent(this, MainActivity::class.java)
             startActivity(intent)
+        }*/
+
+        binding.btnLogin.setOnClickListener {
+            login()
         }
     }
 
