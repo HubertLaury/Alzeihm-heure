@@ -30,52 +30,58 @@ class RegisterActivity : AppCompatActivity() {
             //s'il manque le prenom
             when {
                 //si rien est saisie pour le prenom on affiche un message grace à un toast
-                TextUtils.isEmpty(binding.firstname.text.toString().trim { it <=' '}) -> {
-                    Toast.makeText(this@RegisterActivity,
-                            "Veuillez saisir votre prénom",
-                            Toast.LENGTH_SHORT
+                TextUtils.isEmpty(binding.firstname.text.toString().trim { it <= ' ' }) -> {
+                    Toast.makeText(
+                        this@RegisterActivity,
+                        "Veuillez saisir votre prénom",
+                        Toast.LENGTH_SHORT
                     ).show()
                 }
                 //s'il manque le nom
-                TextUtils.isEmpty(binding.lastname.text.toString().trim { it <=' '}) -> {
-                    Toast.makeText(this@RegisterActivity,
-                            "Veuillez saisir votre nom",
-                            Toast.LENGTH_SHORT
+                TextUtils.isEmpty(binding.lastname.text.toString().trim { it <= ' ' }) -> {
+                    Toast.makeText(
+                        this@RegisterActivity,
+                        "Veuillez saisir votre nom",
+                        Toast.LENGTH_SHORT
                     ).show()
                 }
                 //s'il manque l'adresse mail
-                TextUtils.isEmpty(binding.email.text.toString().trim { it <=' '}) -> {
-                    Toast.makeText(this@RegisterActivity,
-                            "Veuillez saisir votre email",
-                            Toast.LENGTH_SHORT
+                TextUtils.isEmpty(binding.email.text.toString().trim { it <= ' ' }) -> {
+                    Toast.makeText(
+                        this@RegisterActivity,
+                        "Veuillez saisir votre email",
+                        Toast.LENGTH_SHORT
                     ).show()
                 }
                 //si rien est saisie pour le numéro de téléphone on affiche un message grace à un toast
-                TextUtils.isEmpty(binding.telephone.text.toString().trim { it <=' '}) -> {
-                    Toast.makeText(this@RegisterActivity,
-                            "Veuillez saisir votre numéro de téléphone",
-                            Toast.LENGTH_SHORT
+                TextUtils.isEmpty(binding.telephone.text.toString().trim { it <= ' ' }) -> {
+                    Toast.makeText(
+                        this@RegisterActivity,
+                        "Veuillez saisir votre numéro de téléphone",
+                        Toast.LENGTH_SHORT
                     ).show()
                 }
                 //si rien est saisie pour l'adresse on affiche un message grace à un toast
-                TextUtils.isEmpty(binding.adresse.text.toString().trim { it <=' '}) -> {
-                    Toast.makeText(this@RegisterActivity,
-                            "Veuillez saisir votre adresse",
-                            Toast.LENGTH_SHORT
+                TextUtils.isEmpty(binding.adresse.text.toString().trim { it <= ' ' }) -> {
+                    Toast.makeText(
+                        this@RegisterActivity,
+                        "Veuillez saisir votre adresse",
+                        Toast.LENGTH_SHORT
                     ).show()
                 }
                 //s'il manque le mot de passe
-                TextUtils.isEmpty(binding.code.text.toString().trim { it <=' '}) -> {
-                    Toast.makeText(this@RegisterActivity,
-                            "Veuillez saisir votre mot de passe",
-                            Toast.LENGTH_SHORT
+                TextUtils.isEmpty(binding.code.text.toString().trim { it <= ' ' }) -> {
+                    Toast.makeText(
+                        this@RegisterActivity,
+                        "Veuillez saisir votre mot de passe",
+                        Toast.LENGTH_SHORT
                     ).show()
                 }
                 //si rien n'est vide
                 else -> {
                     //on l'utilisateur à mit un espace en trop on l'enlève
-                    val firstname: String = binding.firstname.text.toString().trim { it <=' '}
-                    val lastname: String = binding.lastname.text.toString().trim { it <=' '}
+                    val firstname: String = binding.firstname.text.toString().trim { it <= ' ' }
+                    val lastname: String = binding.lastname.text.toString().trim { it <= ' ' }
                     val email: String = binding.email.text.toString().trim { it <= ' ' }
                     val telephone: String = binding.telephone.text.toString().trim { it <= ' ' }
                     val adresse: String = binding.adresse.text.toString().trim { it <= ' ' }
@@ -83,36 +89,36 @@ class RegisterActivity : AppCompatActivity() {
 
                     //utilisation de firebase
                     FirebaseAuth.getInstance().createUserWithEmailAndPassword(email, password)
-                            .addOnCompleteListener(OnCompleteListener<AuthResult>{ task ->
-                                //si l'inscription est validée
-                                if (task.isSuccessful) {
+                        .addOnCompleteListener(OnCompleteListener<AuthResult> { task ->
+                            //si l'inscription est validée
+                            if (task.isSuccessful) {
 
-                                    //inscription utilisateur sur firebase
-                                    val firebaseUser: FirebaseUser = task.result!!.user!!
-                                    //on prévient l'utilisateur que l'inscription est validée
-                                    Toast.makeText(
-                                            this@RegisterActivity,
-                                            "Inscription réussi",
-                                            Toast.LENGTH_SHORT
-                                    ).show()
+                                //inscription utilisateur sur firebase
+                                val firebaseUser: FirebaseUser = task.result!!.user!!
+                                //on prévient l'utilisateur que l'inscription est validée
+                                Toast.makeText(
+                                    this@RegisterActivity,
+                                    "Inscription réussi",
+                                    Toast.LENGTH_SHORT
+                                ).show()
 
-                                    val intent =
-                                            Intent(this@RegisterActivity, MainActivity::class.java)
-                                    intent.flags =
-                                            Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
-                                    intent.putExtra("user_id", firebaseUser.uid)
-                                    intent.putExtra("email_id", email)
-                                    startActivity(intent)
-                                    finish()
-                                } else {
-                                    //si l'inscription n'est pas validée on affiche un message d'erreur
-                                    Toast.makeText(
-                                            this@RegisterActivity,
-                                            task.exception!!.message.toString(),
-                                            Toast.LENGTH_SHORT
-                                    ).show()
-                                }
-                            })
+                                val intent =
+                                    Intent(this@RegisterActivity, MainActivity::class.java)
+                                intent.flags =
+                                    Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+                                intent.putExtra("user_id", firebaseUser.uid)
+                                intent.putExtra("email_id", email)
+                                startActivity(intent)
+                                finish()
+                            } else {
+                                //si l'inscription n'est pas validée on affiche un message d'erreur
+                                Toast.makeText(
+                                    this@RegisterActivity,
+                                    task.exception!!.message.toString(),
+                                    Toast.LENGTH_SHORT
+                                ).show()
+                            }
+                        })
                 }
             }
         }
