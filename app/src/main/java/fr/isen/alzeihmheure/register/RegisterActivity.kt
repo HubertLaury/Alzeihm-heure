@@ -27,13 +27,20 @@ class RegisterActivity : AppCompatActivity() {
         binding = ActivityRegisterBinding.inflate(layoutInflater)
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
-        val button = findViewById<Button>(R.id.btnRegister)
+        /*val button = findViewById<Button>(R.id.btnRegister)
         button.setOnClickListener {
             val intent = Intent(this, MainActivity::class.java)
             startActivity(intent)
         }
         val button2 = findViewById<Button>(R.id.btnLogin)
         button2.setOnClickListener {
+            val intent = Intent(this, LoginActivity::class.java)
+            startActivity(intent)
+        }*/
+        binding.btnRegister.setOnClickListener {
+            register()
+        }
+        binding.btnLogin.setOnClickListener {
             val intent = Intent(this, LoginActivity::class.java)
             startActivity(intent)
         }
