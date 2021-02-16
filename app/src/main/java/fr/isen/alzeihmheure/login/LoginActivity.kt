@@ -3,18 +3,45 @@ package fr.isen.alzeihmheure.login
 import android.content.Intent
 import android.os.Bundle
 import android.text.TextUtils
+import android.view.View
 import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
 import com.google.firebase.auth.FirebaseAuth
 import fr.isen.alzeihmheure.MainActivity
+import fr.isen.alzeihmheure.R
 import fr.isen.alzeihmheure.databinding.ActivityLoginBinding
 
 class LoginActivity : AppCompatActivity() {
+
     private lateinit var binding: ActivityLoginBinding
+
     override fun onCreate(savedInstanceState: Bundle?) {
+
         super.onCreate(savedInstanceState)
+
         binding = ActivityLoginBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+        val spinnerChoix = findViewById<View>(R.id.spinnerChoix) as Spinner
+        val lChoix = arrayOf("Médecin", "Patient", "Famille", "Aide-soignant")
+        val dataAdapterR =
+            ArrayAdapter(this, android.R.layout.simple_spinner_item, lChoix)
+        dataAdapterR.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+        spinnerChoix.adapter = dataAdapterR
+
+        spinnerChoix.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+            override fun onItemSelected(
+                parent: AdapterView<*>?, view: View,
+                position: Int, id: Long
+            ) {
+
+            }
+
+            override fun onNothingSelected(parent: AdapterView<*>?) {
+                // TODO Auto-generated method stub
+            }
+        }
+
         binding.btnLogin.setOnClickListener{
             when
             {

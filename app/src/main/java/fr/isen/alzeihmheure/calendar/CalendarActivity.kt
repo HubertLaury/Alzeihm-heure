@@ -12,9 +12,12 @@ import fr.isen.alzeihmheure.R
 
 
 class CalendarActivity : AppCompatActivity() {
+
     override fun onCreate(savedInstanceState: Bundle?) {
+
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_calendar)
+
         val spinnerRegion = findViewById<View>(R.id.spinnerRegion) as Spinner
         val lRegion = arrayOf("Médecin", "Patient", "Famille")
         val dataAdapterR =
