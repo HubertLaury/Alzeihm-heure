@@ -9,9 +9,10 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.Alzeihmheure">
-        <activity android:name=".map.MapActivity"></activity>
-        <activity android:name=".calendar.CalendarActivity" >
-        <activity android:name=".MainActivity">
+        <activity android:name=".firebase.AuthenticateActivity"></activity>
+        <activity android:name=".map.MapActivity" />
+        <activity android:name=".calendar.CalendarActivity" />
+        <activity android:name=".MainActivity" />
         <activity android:name=".login.LoginActivity" />
         <activity android:name=".register.RegisterActivity">
             <intent-filter>
