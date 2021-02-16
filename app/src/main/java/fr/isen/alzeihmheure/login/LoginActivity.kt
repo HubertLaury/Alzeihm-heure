@@ -1,132 +1,51 @@
 package fr.isen.alzeihmheure.login
 
-import android.annotation.SuppressLint
-import android.app.Activity
-import android.content.Context
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
-import android.view.View
+import android.text.TextUtils
 import android.widget.*
-import android.widget.Button
-import android.widget.AdapterView.OnItemSelectedListener
 import androidx.appcompat.app.AppCompatActivity
-import com.android.volley.Request
-import com.android.volley.Response
-import com.android.volley.VolleyError
-import com.android.volley.toolbox.JsonObjectRequest
-import com.android.volley.toolbox.Volley
-import com.google.gson.GsonBuilder
+import com.google.firebase.auth.FirebaseAuth
 import fr.isen.alzeihmheure.MainActivity
-import fr.isen.alzeihmheure.R
 import fr.isen.alzeihmheure.databinding.ActivityLoginBinding
-import fr.isen.alzeihmheure.register.RegisterResult
-import fr.isen.alzeihmheure.register.User
-import org.json.JSONObject
+import android.widget.Toast
 
 class LoginActivity : AppCompatActivity() {
     private lateinit var binding: ActivityLoginBinding
     override fun onCreate(savedInstanceState: Bundle?) {
-        binding = ActivityLoginBinding.inflate(layoutInflater)
         super.onCreate(savedInstanceState)
+        binding = ActivityLoginBinding.inflate(layoutInflater)
         setContentView(binding.root)
-        val spinner = findViewById<View>(R.id.spinner) as Spinner
-        val lRegion = arrayOf("Médecin", "Patient", "Famille", "Aide Soignant")
-        val dataAdapterR =
-            ArrayAdapter(this, android.R.layout.simple_spinner_item, lRegion)
-        dataAdapterR.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
-        spinner.adapter = dataAdapterR
-
-        spinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
-            override fun onItemSelected(
-                parent: AdapterView<*>?, view: View,
-                position: Int, id: Long
-            ) {
-                /*val myRegion = spinner.selectedItem.toString()
-                Toast.makeText(
-                    this@LoginActivity,
-                    """
-                        OnClickListener : 
-                        Spinner 1 : $myRegion
-                        """.trimIndent(),
-                    Toast.LENGTH_SHORT
-                ).show()*/
-            }
-
-            override fun onNothingSelected(parent: AdapterView<*>?) {
-                TODO("Not yet implemented")
-            }
-        }
-
-        /*val button2 = findViewById<Button>(R.id.btnLogin)
-        button2.setOnClickListener {
-            val intent = Intent(this, MainActivity::class.java)
-            startActivity(intent)
-        }*/
-
-        binding.btnLogin.setOnClickListener {
-            login()
-        }
-    }
-
-    @SuppressLint("ShowToast")
-    private fun login() {
-        if(validateData()) {
-            launchRequest()
-        } else {
-            Toast.makeText(this, "Please fill all fields.", Toast.LENGTH_SHORT).show()
-        }
-    }
-
-    private fun launchRequest() {
-        val queue = Volley.newRequestQueue(this)
-        val url = "http://test.api.catering.bluecodegames.com/user/login"
-        val postData = createPostData()
-        val request = JsonObjectRequest(
-                Request.Method.POST,
-                url,
-                postData,
-                Response.Listener { response ->
-                    val userResult = GsonBuilder().create().fromJson(response.toString(), RegisterResult::class.java)
-                    saveUser(userResult.data)
-                },
-                Response.ErrorListener { error ->
-                    onFailure(error)
+        binding.btnLogin.setOnClickListener{
+            when
+            {
+                TextUtils.isEmpty(binding.email.text.toString().trim{ it <= ' ' }) ->
+                {
+                    Toast.makeText(this, "Veuillez entrer un email", Toast.LENGTH_SHORT).show()
                 }
-        )
-        queue.add(request)
-    }
 
-    private fun validateData(): Boolean {
-        return binding.email.text?.isNotEmpty() == true &&
-                binding.password.text?.count() ?: 0 >= 6
-    }
-
-    private fun onFailure(error: VolleyError) {
-        Log.d("request", String(error.networkResponse.data))
-    }
-
-    private fun saveUser(user: User) {
-        val sharedPreferences = getSharedPreferences(USER_PREFERENCES_NAME, Context.MODE_PRIVATE)
-        val editor = sharedPreferences.edit()
-        editor.putInt(ID_USER, user.id)
-        editor.apply()
-
-        setResult(Activity.RESULT_OK)
-        finish()
-    }
-
-    private fun createPostData(): JSONObject {
-        val postData = JSONObject()
-        postData.put("id_shop", "1")
-        postData.put("email", binding.email.text)
-        postData.put("password", binding.password.text)
-        return postData
-    }
-
-    companion object {
-        const val REQUEST_CODE = 111
-        const val ID_USER = "ID_USER"
-        const val USER_PREFERENCES_NAME = "USER_PREFERENCES_NAME"
+                TextUtils.isEmpty(binding.password.text.toString().trim{ it <= ' ' }) ->
+                {
+                    Toast.makeText(this, "Veuillez entrer un Mot de passe", Toast.LENGTH_SHORT).show()
+                }
+                else ->
+                {
+                    val email : String = binding.email.text.toString().trim{ it <= ' ' }
+                    val password : String = binding.password.text.toString().trim{ it <= ' ' }
+                    FirebaseAuth.getInstance().signInWithEmailAndPassword(email, password).addOnCompleteListener { task ->
+                        if (task.isSuccessful)
+                        {
+                            Toast.makeText(this, "Vous êtes bien connecté",Toast.LENGTH_SHORT).show()
+                            val intent = Intent(this, MainActivity::class.java)
+                            startActivity(intent)
+                        }
+                        else
+                        {
+                            Toast.makeText(this, task.exception!!.message.toString(),Toast.LENGTH_SHORT).show()
+                        }
+                    }
+                }
+            }
+        }
     }
 }
