@@ -10,8 +10,10 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Alzeihmheure">
         <activity android:name=".map.MapActivity"></activity>
-        <activity android:name=".calendar.CalendarActivity" />
+        <activity android:name=".calendar.CalendarActivity" >
         <activity android:name=".MainActivity">
+        <activity android:name=".login.LoginActivity" />
+        <activity android:name=".register.RegisterActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

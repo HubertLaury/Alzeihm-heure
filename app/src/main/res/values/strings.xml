@@ -7,4 +7,14 @@
     <string name="profile">Profile</string>
     <string name="alerte">Alertes auto</string>
     <string name="Code">Code</string>
+
+    <string name="type">Type</string>
+    <string name="firstname">Prénom</string>
+    <string name="lastname">Nom</string>
+    <string name="email">Email</string>
+    <string name="password">Code</string>
+    <string name="adresse">Adresse</string>
+    <string name="telephone">Numéro de téléphone</string>
+    <string name="register">Créer un compte</string>
+    <string name="login">S\'enregistrer</string>
 </resources>
