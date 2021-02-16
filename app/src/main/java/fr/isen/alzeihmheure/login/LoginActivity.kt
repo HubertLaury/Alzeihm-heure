@@ -8,7 +8,6 @@ import androidx.appcompat.app.AppCompatActivity
 import com.google.firebase.auth.FirebaseAuth
 import fr.isen.alzeihmheure.MainActivity
 import fr.isen.alzeihmheure.databinding.ActivityLoginBinding
-import android.widget.Toast
 
 class LoginActivity : AppCompatActivity() {
     private lateinit var binding: ActivityLoginBinding
