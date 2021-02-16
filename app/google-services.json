@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "416719205773",
+    "firebase_url": "https://alzheimheure-default-rtdb.europe-west1.firebasedatabase.app",
+    "project_id": "alzheimheure",
+    "storage_bucket": "alzheimheure.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:416719205773:android:696454d6385fd8c8ccb9c4",
+        "android_client_info": {
+          "package_name": "fr.isen.alzeihmheure"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "416719205773-o4vfojtmki53752d14nc6svitcvtnhvt.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDDPiyLVG_eCJ13t92DsroWhPK0NETq4GI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "416719205773-o4vfojtmki53752d14nc6svitcvtnhvt.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

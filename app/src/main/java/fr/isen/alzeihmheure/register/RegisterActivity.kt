@@ -1,128 +1,120 @@
 package fr.isen.alzeihmheure.register
 
-import android.annotation.SuppressLint
-import android.app.Activity
-import android.content.Context
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
+import android.text.TextUtils
 import android.widget.Button
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import com.android.volley.Request
-import com.android.volley.Response
-import com.android.volley.VolleyError
-import com.android.volley.toolbox.JsonObjectRequest
-import com.android.volley.toolbox.Volley
-import com.google.gson.GsonBuilder
+import com.google.android.gms.tasks.OnCompleteListener
+import com.google.firebase.auth.AuthResult
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.FirebaseUser
 import fr.isen.alzeihmheure.MainActivity
-import fr.isen.alzeihmheure.R
 import fr.isen.alzeihmheure.databinding.ActivityRegisterBinding
 import fr.isen.alzeihmheure.login.LoginActivity
-import org.json.JSONObject
 
 class RegisterActivity : AppCompatActivity() {
     private lateinit var binding: ActivityRegisterBinding
+
     override fun onCreate(savedInstanceState: Bundle?) {
-        binding = ActivityRegisterBinding.inflate(layoutInflater)
         super.onCreate(savedInstanceState)
+        binding = ActivityRegisterBinding.inflate(layoutInflater)
         setContentView(binding.root)
-        /*val button = findViewById<Button>(R.id.btnRegister)
-        button.setOnClickListener {
-            val intent = Intent(this, MainActivity::class.java)
-            startActivity(intent)
-        }
-        val button2 = findViewById<Button>(R.id.btnLogin)
-        button2.setOnClickListener {
-            val intent = Intent(this, LoginActivity::class.java)
-            startActivity(intent)
-        }*/
-        binding.btnRegister.setOnClickListener {
-            register()
-        }
+        // si on clique sur le bouton 's inscrire' on exécute le code suivant
         binding.btnLogin.setOnClickListener {
             val intent = Intent(this, LoginActivity::class.java)
             startActivity(intent)
         }
-    }
-
-    @SuppressLint("ShowToast")
-    private fun register() {
-        if(validateData()) {
-            launchRequest()
-        } else {
-            Toast.makeText(this, "Please fill all fields.", Toast.LENGTH_SHORT).show()
-        }
-    }
-
-    private fun launchRequest() {
-        val queue = Volley.newRequestQueue(this)
-        val url = "http://test.api.catering.bluecodegames.com/user/register"
-        val postData = createPostData()
-        val request = JsonObjectRequest(
-                Request.Method.POST,
-                url,
-                postData,
-                Response.Listener { response ->
-                    val userResult = GsonBuilder().create().fromJson(response.toString(), RegisterResult::class.java)
-                    saveUser(userResult.data)
-                },
-                Response.ErrorListener { error ->
-                    onFailure(error)
+        binding.btnRegister.setOnClickListener {
+            //s'il manque le prenom
+            when {
+                //si rien est saisie pour le prenom on affiche un message grace à un toast
+                TextUtils.isEmpty(binding.firstname.text.toString().trim { it <=' '}) -> {
+                    Toast.makeText(this@RegisterActivity,
+                            "Veuillez saisir votre prénom",
+                            Toast.LENGTH_SHORT
+                    ).show()
                 }
-        )
-        queue.add(request)
-    }
+                //s'il manque le nom
+                TextUtils.isEmpty(binding.lastname.text.toString().trim { it <=' '}) -> {
+                    Toast.makeText(this@RegisterActivity,
+                            "Veuillez saisir votre nom",
+                            Toast.LENGTH_SHORT
+                    ).show()
+                }
+                //s'il manque l'adresse mail
+                TextUtils.isEmpty(binding.email.text.toString().trim { it <=' '}) -> {
+                    Toast.makeText(this@RegisterActivity,
+                            "Veuillez saisir votre email",
+                            Toast.LENGTH_SHORT
+                    ).show()
+                }
+                //si rien est saisie pour le numéro de téléphone on affiche un message grace à un toast
+                TextUtils.isEmpty(binding.telephone.text.toString().trim { it <=' '}) -> {
+                    Toast.makeText(this@RegisterActivity,
+                            "Veuillez saisir votre numéro de téléphone",
+                            Toast.LENGTH_SHORT
+                    ).show()
+                }
+                //si rien est saisie pour l'adresse on affiche un message grace à un toast
+                TextUtils.isEmpty(binding.adresse.text.toString().trim { it <=' '}) -> {
+                    Toast.makeText(this@RegisterActivity,
+                            "Veuillez saisir votre adresse",
+                            Toast.LENGTH_SHORT
+                    ).show()
+                }
+                //s'il manque le mot de passe
+                TextUtils.isEmpty(binding.code.text.toString().trim { it <=' '}) -> {
+                    Toast.makeText(this@RegisterActivity,
+                            "Veuillez saisir votre mot de passe",
+                            Toast.LENGTH_SHORT
+                    ).show()
+                }
+                //si rien n'est vide
+                else -> {
+                    //on l'utilisateur à mit un espace en trop on l'enlève
+                    val firstname: String = binding.firstname.text.toString().trim { it <=' '}
+                    val lastname: String = binding.lastname.text.toString().trim { it <=' '}
+                    val email: String = binding.email.text.toString().trim { it <= ' ' }
+                    val telephone: String = binding.telephone.text.toString().trim { it <= ' ' }
+                    val adresse: String = binding.adresse.text.toString().trim { it <= ' ' }
+                    val password: String = binding.code.text.toString().trim { it <= ' ' }
 
-    private fun validateData(): Boolean {
-        return binding.email.text?.isNotEmpty() == true &&
-                binding.firstname.text?.isNotEmpty() == true &&
-                binding.lastname.text?.isNotEmpty() == true &&
-                binding.telephone.text?.isNotEmpty() == true &&
-                binding.adresse.text?.isNotEmpty() == true &&
-                binding.code.text?.count() ?: 0 >= 6
-    }
+                    //utilisation de firebase
+                    FirebaseAuth.getInstance().createUserWithEmailAndPassword(email, password)
+                            .addOnCompleteListener(OnCompleteListener<AuthResult>{ task ->
+                                //si l'inscription est validée
+                                if (task.isSuccessful) {
 
-    private fun onFailure(error: VolleyError) {
-        Log.d("request", String(error.networkResponse.data))
-    }
+                                    //inscription utilisateur sur firebase
+                                    val firebaseUser: FirebaseUser = task.result!!.user!!
+                                    //on prévient l'utilisateur que l'inscription est validée
+                                    Toast.makeText(
+                                            this@RegisterActivity,
+                                            "Inscription réussi",
+                                            Toast.LENGTH_SHORT
+                                    ).show()
 
-    private fun saveUser(user: User) {
-        val sharedPreferences = getSharedPreferences(USER_PREFERENCES_NAME, Context.MODE_PRIVATE)
-        val editor = sharedPreferences.edit()
-        editor.putInt(ID_USER, user.id)
-        editor.apply()
-
-        endActivity()
-    }
-
-    private fun endActivity() {
-        setResult(Activity.RESULT_OK)
-        finish()
-    }
-
-    private fun createPostData(): JSONObject {
-        val postData = JSONObject()
-        postData.put("id_shop", "1")
-        postData.put("email", binding.email.text)
-        postData.put("firstname", binding.firstname.text)
-        postData.put("lastname", binding.lastname.text)
-        postData.put("telephone", binding.telephone.text)
-        postData.put("password", binding.code.text)
-        postData.put("adress", binding.adresse.text)
-        return postData
-    }
-
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        super.onActivityResult(requestCode, resultCode, data)
-        if(requestCode == RegisterActivity.REQUEST_CODE) {
-            endActivity()
+                                    val intent =
+                                            Intent(this@RegisterActivity, MainActivity::class.java)
+                                    intent.flags =
+                                            Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+                                    intent.putExtra("user_id", firebaseUser.uid)
+                                    intent.putExtra("email_id", email)
+                                    startActivity(intent)
+                                    finish()
+                                } else {
+                                    //si l'inscription n'est pas validée on affiche un message d'erreur
+                                    Toast.makeText(
+                                            this@RegisterActivity,
+                                            task.exception!!.message.toString(),
+                                            Toast.LENGTH_SHORT
+                                    ).show()
+                                }
+                            })
+                }
+            }
         }
-    }
-
-    companion object {
-        const val REQUEST_CODE = 111
-        const val ID_USER = "ID_USER"
-        const val USER_PREFERENCES_NAME = "USER_PREFERENCES_NAME"
     }
 }
