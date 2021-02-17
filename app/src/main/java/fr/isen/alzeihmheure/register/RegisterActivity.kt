@@ -1,10 +1,11 @@
 package fr.isen.alzeihmheure.register
 
+import android.R
 import android.content.Intent
 import android.os.Bundle
 import android.text.TextUtils
-import android.widget.Button
-import android.widget.Toast
+import android.view.View
+import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
 import com.google.android.gms.tasks.OnCompleteListener
 import com.google.firebase.auth.AuthResult
@@ -70,6 +71,14 @@ class RegisterActivity : AppCompatActivity() {
                     ).show()
                 }
                 //s'il manque le mot de passe
+                TextUtils.isEmpty(binding.password.text.toString().trim { it <= ' ' }) -> {
+                    Toast.makeText(
+                        this@RegisterActivity,
+                        "Veuillez saisir votre mot de passe",
+                        Toast.LENGTH_SHORT
+                    ).show()
+                }
+                //s'il manque le code
                 TextUtils.isEmpty(binding.code.text.toString().trim { it <= ' ' }) -> {
                     Toast.makeText(
                         this@RegisterActivity,
@@ -85,7 +94,8 @@ class RegisterActivity : AppCompatActivity() {
                     val email: String = binding.email.text.toString().trim { it <= ' ' }
                     val telephone: String = binding.telephone.text.toString().trim { it <= ' ' }
                     val adresse: String = binding.adresse.text.toString().trim { it <= ' ' }
-                    val password: String = binding.code.text.toString().trim { it <= ' ' }
+                    val password: String = binding.password.text.toString().trim { it <= ' ' }
+                    val code: String = binding.code.text.toString().trim { it <= ' ' }
 
                     //utilisation de firebase
                     FirebaseAuth.getInstance().createUserWithEmailAndPassword(email, password)
@@ -120,6 +130,24 @@ class RegisterActivity : AppCompatActivity() {
                             }
                         })
                 }
+            }
+        }
+
+        val spinner = findViewById<View>(fr.isen.alzeihmheure.R.id.spinner) as Spinner
+        val lRegion = arrayOf("Médecin", "Patient", "Famille", "Aide soignant", "Patient")
+        val dataAdapterR =
+            ArrayAdapter(this, R.layout.simple_spinner_item, lRegion)
+        dataAdapterR.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+        spinner.adapter = dataAdapterR
+
+        spinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+            override fun onItemSelected(
+                parent: AdapterView<*>?, view: View,
+                position: Int, id: Long
+            ) {}
+
+            override fun onNothingSelected(parent: AdapterView<*>?) {
+                // TODO Auto-generated method stub
             }
         }
     }

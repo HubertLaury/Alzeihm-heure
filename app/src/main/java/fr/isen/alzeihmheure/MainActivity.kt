@@ -7,6 +7,8 @@ import android.widget.Button
 import android.widget.ImageButton
 import fr.isen.alzeihmheure.calendar.CalendarActivity
 import fr.isen.alzeihmheure.map.MapActivity
+import fr.isen.alzeihmheure.member.MemberActivity
+import fr.isen.alzeihmheure.numero.NumeroActivity
 
 class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -25,6 +27,17 @@ class MainActivity : AppCompatActivity() {
             startActivity(intent)
         }
 
+        val button2 = findViewById<Button>(R.id.membres)
+        button2.setOnClickListener {
+            val intent = Intent(this, MemberActivity::class.java)
+            startActivity(intent)
+        }
+
+        val button3 = findViewById<Button>(R.id.urgence)
+        button3.setOnClickListener {
+            val intent = Intent(this, NumeroActivity::class.java)
+            startActivity(intent)
+        }
 
     }
 }
