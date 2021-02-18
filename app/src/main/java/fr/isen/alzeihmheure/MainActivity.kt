@@ -4,8 +4,11 @@ import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Button
+import android.widget.ImageButton
 import fr.isen.alzeihmheure.calendar.CalendarActivity
-import fr.isen.alzeihmheure.map.MapsActivity
+import fr.isen.alzeihmheure.member.MemberActivity
+import fr.isen.alzeihmheure.numero.NumeroActivity
+import fr.isen.alzeihmheure.map.MapActivity
 
 class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -20,10 +23,21 @@ class MainActivity : AppCompatActivity() {
 
         val button1 = findViewById<Button>(R.id.trajet)
         button1.setOnClickListener {
-            val intent = Intent(this, MapsActivity::class.java)
+            val intent = Intent(this, MapActivity::class.java)
             startActivity(intent)
         }
 
+        val button2 = findViewById<Button>(R.id.membres)
+        button2.setOnClickListener {
+            val intent = Intent(this, MemberActivity::class.java)
+            startActivity(intent)
+        }
+
+        val button3 = findViewById<Button>(R.id.urgence)
+        button3.setOnClickListener {
+            val intent = Intent(this, NumeroActivity::class.java)
+            startActivity(intent)
+        }
 
     }
 }

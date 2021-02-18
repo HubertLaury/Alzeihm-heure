@@ -19,10 +19,14 @@
         <activity android:name=".firebase.AuthenticateActivity"></activity>
         <activity android:name=".map.MapsActivity"
                   android:label="@string/title_activity_maps"/>
+        <activity android:name=".numero.NumeroActivity"></activity>
+        <activity android:name=".member.MemberActivity" />
+        <activity android:name=".firebase.AuthenticateActivity" />
+        <activity android:name=".map.MapActivity" />
         <activity android:name=".calendar.CalendarActivity" />
+        <activity android:name=".register.RegisterActivity" />
         <activity android:name=".login.LoginActivity" />
-        <activity android:name=".register.RegisterActivity"/>
-        <activity android:name=".MainActivity" >
+        <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

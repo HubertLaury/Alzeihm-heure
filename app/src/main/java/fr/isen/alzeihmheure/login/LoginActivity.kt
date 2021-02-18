@@ -4,7 +4,10 @@ import android.content.Intent
 import android.os.Bundle
 import android.text.TextUtils
 import android.view.View
-import android.widget.*
+import android.widget.AdapterView
+import android.widget.ArrayAdapter
+import android.widget.Spinner
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.google.firebase.auth.FirebaseAuth
 import fr.isen.alzeihmheure.MainActivity
@@ -12,36 +15,11 @@ import fr.isen.alzeihmheure.R
 import fr.isen.alzeihmheure.databinding.ActivityLoginBinding
 
 class LoginActivity : AppCompatActivity() {
-
     private lateinit var binding: ActivityLoginBinding
-
     override fun onCreate(savedInstanceState: Bundle?) {
-
         super.onCreate(savedInstanceState)
-
         binding = ActivityLoginBinding.inflate(layoutInflater)
         setContentView(binding.root)
-
-        val spinnerChoix = findViewById<View>(R.id.spinnerChoix) as Spinner
-        val lChoix = arrayOf("Médecin", "Patient", "Famille", "Aide-soignant")
-        val dataAdapterR =
-            ArrayAdapter(this, android.R.layout.simple_spinner_item, lChoix)
-        dataAdapterR.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
-        spinnerChoix.adapter = dataAdapterR
-
-        spinnerChoix.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
-            override fun onItemSelected(
-                parent: AdapterView<*>?, view: View,
-                position: Int, id: Long
-            ) {
-
-            }
-
-            override fun onNothingSelected(parent: AdapterView<*>?) {
-                // TODO Auto-generated method stub
-            }
-        }
-
         binding.btnLogin.setOnClickListener{
             when
             {
@@ -54,10 +32,16 @@ class LoginActivity : AppCompatActivity() {
                 {
                     Toast.makeText(this, "Veuillez entrer un Mot de passe", Toast.LENGTH_SHORT).show()
                 }
+
+                TextUtils.isEmpty(binding.code.text.toString().trim { it <= ' ' }) ->
+                {
+                    Toast.makeText(this, "Veuillez entrer un Mot de passe", Toast.LENGTH_SHORT).show()
+                }
                 else ->
                 {
                     val email : String = binding.email.text.toString().trim{ it <= ' ' }
                     val password : String = binding.password.text.toString().trim{ it <= ' ' }
+                    val code : String = binding.code.text.toString().trim{ it <= ' ' }
                     FirebaseAuth.getInstance().signInWithEmailAndPassword(email, password).addOnCompleteListener { task ->
                         if (task.isSuccessful)
                         {
@@ -71,6 +55,23 @@ class LoginActivity : AppCompatActivity() {
                         }
                     }
                 }
+            }
+        }
+        val spinner = findViewById<View>(fr.isen.alzeihmheure.R.id.spinner) as Spinner
+        val lRegion = arrayOf("Médecin", "Patient", "Famille", "Aide soignant", "Patient")
+        val dataAdapterR =
+                ArrayAdapter(this, android.R.layout.simple_spinner_item, lRegion)
+        dataAdapterR.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+        spinner.adapter = dataAdapterR
+
+        spinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+            override fun onItemSelected(
+                    parent: AdapterView<*>?, view: View,
+                    position: Int, id: Long
+            ) {}
+
+            override fun onNothingSelected(parent: AdapterView<*>?) {
+                // TODO Auto-generated method stub
             }
         }
     }
