@@ -14,9 +14,9 @@
         <activity android:name=".firebase.AuthenticateActivity" />
         <activity android:name=".map.MapActivity" />
         <activity android:name=".calendar.CalendarActivity" />
-        <activity android:name=".MainActivity" />
+        <activity android:name=".register.RegisterActivity" />
         <activity android:name=".login.LoginActivity" />
-        <activity android:name=".register.RegisterActivity">
+        <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

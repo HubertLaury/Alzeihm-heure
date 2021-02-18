@@ -15,6 +15,7 @@ import fr.isen.alzeihmheure.MainActivity
 import fr.isen.alzeihmheure.databinding.ActivityRegisterBinding
 import fr.isen.alzeihmheure.login.LoginActivity
 
+
 class RegisterActivity : AppCompatActivity() {
     private lateinit var binding: ActivityRegisterBinding
 
@@ -22,11 +23,13 @@ class RegisterActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityRegisterBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
         // si on clique sur le bouton 's inscrire' on exécute le code suivant
         binding.btnLogin.setOnClickListener {
             val intent = Intent(this, LoginActivity::class.java)
             startActivity(intent)
         }
+
         binding.btnRegister.setOnClickListener {
             //s'il manque le prenom
             when {
@@ -118,6 +121,11 @@ class RegisterActivity : AppCompatActivity() {
                                     Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
                                 intent.putExtra("user_id", firebaseUser.uid)
                                 intent.putExtra("email_id", email)
+                                intent.putExtra("firstname_id", firstname)
+                                intent.putExtra("lastname_id", lastname)
+                                intent.putExtra("telephone_id", telephone)
+                                intent.putExtra("adresse_id", adresse)
+                                intent.putExtra("password_id", password)
                                 startActivity(intent)
                                 finish()
                             } else {

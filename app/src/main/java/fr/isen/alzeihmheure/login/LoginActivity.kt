@@ -11,6 +11,7 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.google.firebase.auth.FirebaseAuth
 import fr.isen.alzeihmheure.MainActivity
+import fr.isen.alzeihmheure.R
 import fr.isen.alzeihmheure.databinding.ActivityLoginBinding
 
 class LoginActivity : AppCompatActivity() {
@@ -59,7 +60,7 @@ class LoginActivity : AppCompatActivity() {
         val spinner = findViewById<View>(fr.isen.alzeihmheure.R.id.spinner) as Spinner
         val lRegion = arrayOf("Médecin", "Patient", "Famille", "Aide soignant", "Patient")
         val dataAdapterR =
-                ArrayAdapter(this, R.layout.simple_spinner_item, lRegion)
+                ArrayAdapter(this, android.R.layout.simple_spinner_item, lRegion)
         dataAdapterR.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
         spinner.adapter = dataAdapterR
 
