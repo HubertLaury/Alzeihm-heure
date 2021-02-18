@@ -6,9 +6,9 @@ import android.os.Bundle
 import android.widget.Button
 import android.widget.ImageButton
 import fr.isen.alzeihmheure.calendar.CalendarActivity
-import fr.isen.alzeihmheure.map.MapActivity
 import fr.isen.alzeihmheure.member.MemberActivity
 import fr.isen.alzeihmheure.numero.NumeroActivity
+import fr.isen.alzeihmheure.map.MapActivity
 
 class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {

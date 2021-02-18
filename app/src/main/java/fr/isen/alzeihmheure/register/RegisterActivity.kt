@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.text.TextUtils
 import android.view.View
 import android.widget.*
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.google.android.gms.tasks.OnCompleteListener
 import com.google.firebase.auth.AuthResult
@@ -15,7 +16,6 @@ import fr.isen.alzeihmheure.MainActivity
 import fr.isen.alzeihmheure.databinding.ActivityRegisterBinding
 import fr.isen.alzeihmheure.login.LoginActivity
 
-
 class RegisterActivity : AppCompatActivity() {
     private lateinit var binding: ActivityRegisterBinding
 
@@ -23,13 +23,11 @@ class RegisterActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityRegisterBinding.inflate(layoutInflater)
         setContentView(binding.root)
-
         // si on clique sur le bouton 's inscrire' on exécute le code suivant
         binding.btnLogin.setOnClickListener {
             val intent = Intent(this, LoginActivity::class.java)
             startActivity(intent)
         }
-
         binding.btnRegister.setOnClickListener {
             //s'il manque le prenom
             when {
