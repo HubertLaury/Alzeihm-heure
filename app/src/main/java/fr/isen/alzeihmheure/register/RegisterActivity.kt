@@ -6,7 +6,6 @@ import android.os.Bundle
 import android.text.TextUtils
 import android.view.View
 import android.widget.*
-import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.google.android.gms.tasks.OnCompleteListener
 import com.google.firebase.auth.AuthResult
@@ -34,57 +33,57 @@ class RegisterActivity : AppCompatActivity() {
                 //si rien est saisie pour le prenom on affiche un message grace à un toast
                 TextUtils.isEmpty(binding.firstname.text.toString().trim { it <= ' ' }) -> {
                     Toast.makeText(
-                        this@RegisterActivity,
-                        "Veuillez saisir votre prénom",
-                        Toast.LENGTH_SHORT
+                            this@RegisterActivity,
+                            "Veuillez saisir votre prénom",
+                            Toast.LENGTH_SHORT
                     ).show()
                 }
                 //s'il manque le nom
                 TextUtils.isEmpty(binding.lastname.text.toString().trim { it <= ' ' }) -> {
                     Toast.makeText(
-                        this@RegisterActivity,
-                        "Veuillez saisir votre nom",
-                        Toast.LENGTH_SHORT
+                            this@RegisterActivity,
+                            "Veuillez saisir votre nom",
+                            Toast.LENGTH_SHORT
                     ).show()
                 }
                 //s'il manque l'adresse mail
                 TextUtils.isEmpty(binding.email.text.toString().trim { it <= ' ' }) -> {
                     Toast.makeText(
-                        this@RegisterActivity,
-                        "Veuillez saisir votre email",
-                        Toast.LENGTH_SHORT
+                            this@RegisterActivity,
+                            "Veuillez saisir votre email",
+                            Toast.LENGTH_SHORT
                     ).show()
                 }
                 //si rien est saisie pour le numéro de téléphone on affiche un message grace à un toast
                 TextUtils.isEmpty(binding.telephone.text.toString().trim { it <= ' ' }) -> {
                     Toast.makeText(
-                        this@RegisterActivity,
-                        "Veuillez saisir votre numéro de téléphone",
-                        Toast.LENGTH_SHORT
+                            this@RegisterActivity,
+                            "Veuillez saisir votre numéro de téléphone",
+                            Toast.LENGTH_SHORT
                     ).show()
                 }
                 //si rien est saisie pour l'adresse on affiche un message grace à un toast
                 TextUtils.isEmpty(binding.adresse.text.toString().trim { it <= ' ' }) -> {
                     Toast.makeText(
-                        this@RegisterActivity,
-                        "Veuillez saisir votre adresse",
-                        Toast.LENGTH_SHORT
+                            this@RegisterActivity,
+                            "Veuillez saisir votre adresse",
+                            Toast.LENGTH_SHORT
                     ).show()
                 }
                 //s'il manque le mot de passe
                 TextUtils.isEmpty(binding.password.text.toString().trim { it <= ' ' }) -> {
                     Toast.makeText(
-                        this@RegisterActivity,
-                        "Veuillez saisir votre mot de passe",
-                        Toast.LENGTH_SHORT
+                            this@RegisterActivity,
+                            "Veuillez saisir votre mot de passe",
+                            Toast.LENGTH_SHORT
                     ).show()
                 }
                 //s'il manque le code
                 TextUtils.isEmpty(binding.code.text.toString().trim { it <= ' ' }) -> {
                     Toast.makeText(
-                        this@RegisterActivity,
-                        "Veuillez saisir votre mot de passe",
-                        Toast.LENGTH_SHORT
+                            this@RegisterActivity,
+                            "Veuillez saisir votre mot de passe",
+                            Toast.LENGTH_SHORT
                     ).show()
                 }
                 //si rien n'est vide
@@ -108,15 +107,15 @@ class RegisterActivity : AppCompatActivity() {
                                 val firebaseUser: FirebaseUser = task.result!!.user!!
                                 //on prévient l'utilisateur que l'inscription est validée
                                 Toast.makeText(
-                                    this@RegisterActivity,
-                                    "Inscription réussi",
-                                    Toast.LENGTH_SHORT
+                                        this@RegisterActivity,
+                                        "Inscription réussi",
+                                        Toast.LENGTH_SHORT
                                 ).show()
 
                                 val intent =
-                                    Intent(this@RegisterActivity, MainActivity::class.java)
+                                        Intent(this@RegisterActivity, MainActivity::class.java)
                                 intent.flags =
-                                    Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+                                        Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
                                 intent.putExtra("user_id", firebaseUser.uid)
                                 intent.putExtra("email_id", email)
                                 intent.putExtra("firstname_id", firstname)
@@ -129,9 +128,9 @@ class RegisterActivity : AppCompatActivity() {
                             } else {
                                 //si l'inscription n'est pas validée on affiche un message d'erreur
                                 Toast.makeText(
-                                    this@RegisterActivity,
-                                    task.exception!!.message.toString(),
-                                    Toast.LENGTH_SHORT
+                                        this@RegisterActivity,
+                                        task.exception!!.message.toString(),
+                                        Toast.LENGTH_SHORT
                                 ).show()
                             }
                         })
@@ -148,8 +147,8 @@ class RegisterActivity : AppCompatActivity() {
 
         spinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
             override fun onItemSelected(
-                parent: AdapterView<*>?, view: View,
-                position: Int, id: Long
+                    parent: AdapterView<*>?, view: View,
+                    position: Int, id: Long
             ) {}
 
             override fun onNothingSelected(parent: AdapterView<*>?) {

@@ -6,13 +6,14 @@ import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.FragmentActivity
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.google.firebase.database.*
+import com.google.firebase.database.DataSnapshot
+import com.google.firebase.database.DatabaseError
+import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.database.ValueEventListener
 import fr.isen.alzeihmheure.databinding.ActivityMemberBinding
 
 class MemberActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMemberBinding
-    private lateinit var database: DatabaseReference
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMemberBinding.inflate(layoutInflater)
@@ -44,7 +45,7 @@ class MemberActivity : AppCompatActivity() {
     {
         users?.let {
             val adapter = MemberAdapter(it) { user ->
-                Log.d("user", "selected dish ${user.firstname}")
+                Log.d("user", "selected dish ${user.lastname}${user.firstname}")
             }
             binding.recyclerView.layoutManager = LinearLayoutManager(this)
             binding.recyclerView.adapter = adapter

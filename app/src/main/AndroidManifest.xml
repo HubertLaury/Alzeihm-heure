@@ -11,18 +11,18 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.Alzeihmheure">
+        <activity android:name=".calendar.EventActivity"></activity>
 
         <meta-data
             android:name="com.google.android.geo.API_KEY"
             android:value="@string/google_maps_key" />
 
-        <activity android:name=".firebase.AuthenticateActivity"></activity>
-        <activity android:name=".map.MapsActivity"
-                  android:label="@string/title_activity_maps"/>
-        <activity android:name=".numero.NumeroActivity"></activity>
-        <activity android:name=".member.MemberActivity" />
         <activity android:name=".firebase.AuthenticateActivity" />
-        <activity android:name=".map.MapActivity" />
+        <activity
+            android:name=".map.MapsActivity"
+            android:label="@string/title_activity_maps" />
+        <activity android:name=".numero.NumeroActivity" />
+        <activity android:name=".member.MemberActivity" />
         <activity android:name=".calendar.CalendarActivity" />
         <activity android:name=".register.RegisterActivity" />
         <activity android:name=".login.LoginActivity" />

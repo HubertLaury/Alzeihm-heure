@@ -8,7 +8,7 @@
     tools:context=".calendar.CalendarActivity">
 
     <CalendarView
-        android:id="@+id/calendarView"
+        android:id="@+id/simpleCalendarView"
         android:layout_width="382dp"
         android:layout_height="380dp"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -16,6 +16,16 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.16000003" />
+
+    <Button
+        android:id="@+id/btnEvent"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="32dp"
+        android:text="@string/event"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/simpleCalendarView" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

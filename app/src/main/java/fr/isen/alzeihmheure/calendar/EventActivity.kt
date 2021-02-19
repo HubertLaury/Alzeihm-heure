@@ -1,12 +1,12 @@
-package fr.isen.alzeihmheure.map
+package fr.isen.alzeihmheure.calendar
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import fr.isen.alzeihmheure.R
 
-class MapActivity : AppCompatActivity() {
+class EventActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_map)
+        setContentView(R.layout.activity_event)
     }
 }
