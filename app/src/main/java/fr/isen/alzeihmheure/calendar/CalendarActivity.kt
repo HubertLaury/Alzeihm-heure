@@ -7,26 +7,25 @@ import android.widget.CalendarView
 import androidx.appcompat.app.AppCompatActivity
 import fr.isen.alzeihmheure.R
 import fr.isen.alzeihmheure.databinding.ActivityCalendarBinding
+import java.util.*
 
 
 class CalendarActivity : AppCompatActivity() {
-    private lateinit var binding: ActivityCalendarBinding
-    private lateinit var simpleCalendarView: CalendarView
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = ActivityCalendarBinding.inflate(layoutInflater)
-        setContentView(binding.root)
-        // si on clique sur le bouton 's inscrire' on exécute le code suivant
-        binding.btnEvent.setOnClickListener {
-            val intent = Intent(this, EventActivity::class.java)
-            startActivity(intent)
-        }
+        setContentView(R.layout.activity_calendar)
 
-        /*val simpleCalendarView =
-            findViewById<View>(R.id.simpleCalendarView) as CalendarView // get the reference of CalendarView
-
-        val selectedDate = simpleCalendarView.date // get selected date in milliseconds*/
-
+    }
+    fun AddCalendarEvent(view: View) {
+        val calendarEvent: Calendar = Calendar.getInstance()
+        val i = Intent(Intent.ACTION_EDIT)
+        i.type = "vnd.android.cursor.item/event"
+        i.putExtra("beginTime", calendarEvent.getTimeInMillis())
+        i.putExtra("allDay", true)
+        i.putExtra("rule", "FREQ=YEARLY")
+        i.putExtra("endTime", calendarEvent.getTimeInMillis() + 60 * 60 * 1000)
+        i.putExtra("title", "Calendar Event")
+        startActivity(i)
     }
 }
