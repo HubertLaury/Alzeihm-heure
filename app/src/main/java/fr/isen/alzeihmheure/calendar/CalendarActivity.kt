@@ -6,15 +6,31 @@ import android.view.View
 import android.widget.CalendarView
 import androidx.appcompat.app.AppCompatActivity
 import fr.isen.alzeihmheure.R
-import fr.isen.alzeihmheure.databinding.ActivityCalendarBinding
 import java.util.*
-
+import android.widget.CalendarView.OnDateChangeListener
+import android.widget.TextView
+import fr.isen.alzeihmheure.MainActivity
 
 class CalendarActivity : AppCompatActivity() {
+    private lateinit var mCalendarView: CalendarView
+    private lateinit var thedate: TextView
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_calendar)
+
+        val incoming = intent
+        thedate = findViewById<View>(R.id.date) as TextView
+        val date = incoming.getStringExtra("date")
+        thedate.setText(date)
+
+        mCalendarView = findViewById<CalendarView>(R.id.viewCalender) as CalendarView
+        mCalendarView.setOnDateChangeListener(CalendarView.OnDateChangeListener { CalendarView, year, month, dayOfMonth ->
+            val date = "$year/$month/$dayOfMonth"
+            val intent = Intent(this@CalendarActivity, CalendarActivity::class.java)
+            intent.putExtra("date", date)
+            startActivity(intent)
+        })
 
     }
     fun AddCalendarEvent(view: View) {
