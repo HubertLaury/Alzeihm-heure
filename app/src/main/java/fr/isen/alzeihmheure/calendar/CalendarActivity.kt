@@ -41,7 +41,9 @@ class CalendarActivity : AppCompatActivity() {
         i.putExtra("allDay", true)
         i.putExtra("rule", "FREQ=YEARLY")
         i.putExtra("endTime", calendarEvent.getTimeInMillis() + 60 * 60 * 1000)
-        i.putExtra("title", "Calendar Event")
+        i.putExtra("title", "Nouvelle Evenement")
         startActivity(i)
+
+
     }
 }

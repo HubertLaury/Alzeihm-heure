@@ -12,13 +12,13 @@ class MemberAdapter (private val entries: List<User>,
         class UserViewHolder(userBinding: UserCellBinding): RecyclerView.ViewHolder(userBinding.root) {
             val firstname: TextView = userBinding.firstname
             val lastname: TextView = userBinding.lastname
-            //val telephone: TextView = userBinding.telephone
+            val telephone: TextView = userBinding.telephone
             val layout = userBinding.root
 
             fun bind(user: User){
                 firstname.text = user.firstname
                 lastname.text = user.lastname
-                //telephone.text = user.telephone
+                telephone.text = user.telephone
             }
         }
 
