@@ -41,5 +41,7 @@ class CalendarActivity : AppCompatActivity() {
         i.putExtra("endTime", calendarEvent.getTimeInMillis() + 60 * 60 * 1000)
         i.putExtra("title", "Calendar Event")
         startActivity(i)
+        i.putExtra("title", "Nouvelle Evenement")
+        startActivity(i)
     }
 }

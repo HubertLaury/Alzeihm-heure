@@ -8,7 +8,6 @@ import fr.isen.alzeihmheure.calendar.CalendarActivity
 import fr.isen.alzeihmheure.map.MapsActivity
 import fr.isen.alzeihmheure.member.MemberActivity
 import fr.isen.alzeihmheure.numero.NumeroActivity
-import fr.isen.alzeihmheure.R
 
 
 class MainActivity : AppCompatActivity() {

@@ -113,9 +113,9 @@ class RegisterActivity : AppCompatActivity() {
                                 ).show()
 
                                 val intent =
-                                    Intent(this@RegisterActivity, MainActivity::class.java)
+                                        Intent(this@RegisterActivity, MainActivity::class.java)
                                 intent.flags =
-                                    Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+                                        Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
                                 intent.putExtra("user_id", firebaseUser.uid)
                                 intent.putExtra("email_id", email)
                                 intent.putExtra("firstname_id", firstname)
@@ -143,12 +143,13 @@ class RegisterActivity : AppCompatActivity() {
         val dataAdapterR =
             ArrayAdapter(this, R.layout.simple_spinner_item, lRegion)
         dataAdapterR.setDropDownViewResource(R.layout.simple_spinner_dropdown_item)
+        dataAdapterR.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
         spinner.adapter = dataAdapterR
 
         spinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
             override fun onItemSelected(
-                parent: AdapterView<*>?, view: View,
-                position: Int, id: Long
+                    parent: AdapterView<*>?, view: View,
+                    position: Int, id: Long
             ) {}
 
             override fun onNothingSelected(parent: AdapterView<*>?) {

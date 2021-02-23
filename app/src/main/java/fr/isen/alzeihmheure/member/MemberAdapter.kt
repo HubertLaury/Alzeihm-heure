@@ -13,16 +13,12 @@ class MemberAdapter (private val entries: List<User>,
         val firstname: TextView = userBinding.firstname
         val lastname: TextView = userBinding.lastname
         val telephone: TextView = userBinding.phone
-        val mail: TextView = userBinding.email
-        val adress: TextView = userBinding.adress
         val layout = userBinding.root
 
         fun bind(user: User){
             firstname.text = user.firstname
             lastname.text = user.lastname
-            mail.text = user.email
             telephone.text = user.telephone
-            adress.text = user.adresse
         }
     }
 

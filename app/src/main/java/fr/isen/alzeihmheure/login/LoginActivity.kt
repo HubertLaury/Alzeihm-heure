@@ -1,7 +1,6 @@
 package fr.isen.alzeihmheure.login
 
 import android.content.Intent
-import android.icu.text.DateFormat.getDateInstance
 import android.os.Bundle
 import android.text.TextUtils
 import android.view.View
@@ -74,6 +73,7 @@ class LoginActivity : AppCompatActivity() {
         val lRegion = arrayOf("Médecin", "Patient", "Famille", "Aide soignant", "Patient")
         val dataAdapterR =
             ArrayAdapter(this, android.R.layout.simple_spinner_item, lRegion)
+                ArrayAdapter(this, android.R.layout.simple_spinner_item, lRegion)
         dataAdapterR.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
         spinner.adapter = dataAdapterR
 

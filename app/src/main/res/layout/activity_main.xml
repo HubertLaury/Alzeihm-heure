@@ -9,10 +9,10 @@
 
     <ImageView
         android:id="@+id/imageContacts"
-        android:layout_width="104dp"
-        android:layout_height="104dp"
+        android:layout_width="88dp"
+        android:layout_height="88dp"
         android:layout_marginStart="44dp"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="16dp"
         android:contentDescription="@string/contacts"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/membres"
@@ -20,10 +20,10 @@
 
     <ImageView
         android:id="@+id/imageCalendrier"
-        android:layout_width="104dp"
-        android:layout_height="104dp"
-        android:layout_marginTop="20dp"
-        android:layout_marginEnd="48dp"
+        android:layout_width="88dp"
+        android:layout_height="88dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="54dp"
         android:contentDescription="@string/calendrier"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/calendrier"
@@ -31,9 +31,9 @@
 
     <ImageView
         android:id="@+id/imageHistorique"
-        android:layout_width="104dp"
-        android:layout_height="104dp"
-        android:layout_marginStart="40dp"
+        android:layout_width="88dp"
+        android:layout_height="88dp"
+        android:layout_marginStart="44dp"
         android:layout_marginBottom="40dp"
         android:contentDescription="@string/trajet"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -42,8 +42,8 @@
 
     <ImageView
         android:id="@+id/imageUrgence"
-        android:layout_width="104dp"
-        android:layout_height="104dp"
+        android:layout_width="88dp"
+        android:layout_height="88dp"
         android:layout_marginEnd="40dp"
         android:layout_marginBottom="40dp"
         android:contentDescription="@string/urgence"
@@ -55,14 +55,15 @@
         android:id="@+id/imageProfile"
         android:layout_width="140dp"
         android:layout_height="145dp"
+        android:layout_marginTop="16dp"
         android:contentDescription="@string/profile"
         android:scaleType="fitXY"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.13"
+        app:layout_constraintTop_toBottomOf="@+id/switch1"
+        app:layout_constraintVertical_bias="0.0"
         app:srcCompat="@drawable/grandfather" />
 
     <Switch
@@ -93,6 +94,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="32dp"
         android:layout_marginTop="56dp"
+        android:layout_marginBottom="8dp"
         android:backgroundTint="@color/white"
         android:text="@string/contacts"
         android:textColor="@color/black"
@@ -120,7 +122,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="56dp"
-        android:layout_marginEnd="16dp"
+        android:layout_marginEnd="32dp"
         android:backgroundTint="@color/white"
         android:text="@string/calendrier"
         android:textColor="@color/black"
@@ -133,7 +135,7 @@
         android:id="@+id/urgence"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="16dp"
+        android:layout_marginEnd="32dp"
         android:layout_marginBottom="20dp"
         android:backgroundTint="@color/white"
         android:text="@string/urgence"
