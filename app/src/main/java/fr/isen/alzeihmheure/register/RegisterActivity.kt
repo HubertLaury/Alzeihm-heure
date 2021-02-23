@@ -142,7 +142,7 @@ class RegisterActivity : AppCompatActivity() {
         val lRegion = arrayOf("Médecin", "Patient", "Famille", "Aide soignant", "Patient")
         val dataAdapterR =
             ArrayAdapter(this, R.layout.simple_spinner_item, lRegion)
-        dataAdapterR.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+        dataAdapterR.setDropDownViewResource(R.layout.simple_spinner_dropdown_item)
         spinner.adapter = dataAdapterR
 
         spinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
