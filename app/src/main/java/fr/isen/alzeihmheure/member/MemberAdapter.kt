@@ -4,7 +4,7 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
-import fr.isen.myapplication.databinding.UserCellBinding
+import fr.isen.alzeihmheure.databinding.UserCellBinding
 
 class MemberAdapter (private val entries: List<User>,
                      private val entryClickListener: (User) -> Unit): RecyclerView.Adapter<MemberAdapter.UserViewHolder>() {

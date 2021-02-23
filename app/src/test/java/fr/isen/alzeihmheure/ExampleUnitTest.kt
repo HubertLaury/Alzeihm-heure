@@ -1,4 +1,4 @@
-package fr.isen.myapplication
+package fr.isen.alzeihmheure
 
 import org.junit.Test
 

@@ -13,7 +13,7 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import fr.isen.alzeihmheure.MainActivity
 import fr.isen.alzeihmheure.login.LoginActivity
-import fr.isen.myapplication.databinding.ActivityRegisterBinding
+import fr.isen.alzeihmheure.databinding.ActivityRegisterBinding
 
 class RegisterActivity : AppCompatActivity() {
     private lateinit var binding: ActivityRegisterBinding
@@ -138,11 +138,11 @@ class RegisterActivity : AppCompatActivity() {
             }
         }
 
-        val spinner = findViewById<View>(fr.isen.myapplication.R.id.spinner) as Spinner
+        val spinner = findViewById<View>(fr.isen.alzeihmheure.R.id.spinner) as Spinner
         val lRegion = arrayOf("Médecin", "Patient", "Famille", "Aide soignant", "Patient")
         val dataAdapterR =
             ArrayAdapter(this, R.layout.simple_spinner_item, lRegion)
-        dataAdapterR.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+        dataAdapterR.setDropDownViewResource(R.layout.simple_spinner_dropdown_item)
         spinner.adapter = dataAdapterR
 
         spinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {

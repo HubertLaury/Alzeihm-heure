@@ -1,4 +1,4 @@
-package fr.isen.myapplication
+package fr.isen.alzeihmheure
 
 import androidx.test.platform.app.InstrumentationRegistry
 import androidx.test.ext.junit.runners.AndroidJUnit4

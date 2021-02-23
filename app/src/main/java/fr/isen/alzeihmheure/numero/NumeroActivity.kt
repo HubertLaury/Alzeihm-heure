@@ -2,7 +2,7 @@ package fr.isen.alzeihmheure.numero
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import fr.isen.myapplication.R
+import fr.isen.alzeihmheure.R
 
 class NumeroActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {

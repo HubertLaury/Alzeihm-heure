@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="fr.isen.myapplication">
+    package="fr.isen.alzeihmheure">
 
     <application
         android:allowBackup="true"
@@ -14,16 +14,16 @@
             android:name="com.google.android.geo.API_KEY"
             android:value="@string/google_maps_key" />
 
-        <activity android:name="fr.isen.alzeihmheure.firebase.AuthenticateActivity" />
+        <activity android:name=".firebase.AuthenticateActivity" />
         <activity
-            android:name="fr.isen.alzeihmheure.map.MapsActivity"
+            android:name=".map.MapsActivity"
             android:label="@string/title_activity_maps" />
-        <activity android:name="fr.isen.alzeihmheure.numero.NumeroActivity" />
-        <activity android:name="fr.isen.alzeihmheure.member.MemberActivity" />
-        <activity android:name="fr.isen.alzeihmheure.calendar.CalendarActivity" />
-        <activity android:name="fr.isen.alzeihmheure.register.RegisterActivity" />
-        <activity android:name="fr.isen.alzeihmheure.login.LoginActivity" />
-        <activity android:name="fr.isen.alzeihmheure.MainActivity">
+        <activity android:name=".numero.NumeroActivity" />
+        <activity android:name=".member.MemberActivity" />
+        <activity android:name=".calendar.CalendarActivity" />
+        <activity android:name=".register.RegisterActivity" />
+        <activity android:name=".login.LoginActivity" />
+        <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

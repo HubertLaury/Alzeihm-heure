@@ -9,8 +9,8 @@ import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
 import com.google.firebase.auth.FirebaseAuth
 import fr.isen.alzeihmheure.MainActivity
-import fr.isen.myapplication.R
-import fr.isen.myapplication.databinding.ActivityLoginBinding
+import fr.isen.alzeihmheure.R
+import fr.isen.alzeihmheure.databinding.ActivityLoginBinding
 import java.util.*
 import java.text.DateFormat
 
@@ -70,7 +70,7 @@ class LoginActivity : AppCompatActivity() {
                 }
             }
         }
-        val spinner = findViewById<View>(fr.isen.myapplication.R.id.spinner) as Spinner
+        val spinner = findViewById<View>(fr.isen.alzeihmheure.R.id.spinner) as Spinner
         val lRegion = arrayOf("Médecin", "Patient", "Famille", "Aide soignant", "Patient")
         val dataAdapterR =
             ArrayAdapter(this, android.R.layout.simple_spinner_item, lRegion)

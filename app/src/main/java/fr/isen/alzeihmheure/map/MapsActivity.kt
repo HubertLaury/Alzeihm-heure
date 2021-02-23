@@ -9,7 +9,7 @@ import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MarkerOptions
-import fr.isen.myapplication.R
+import fr.isen.alzeihmheure.R
 
 
 class MapsActivity : AppCompatActivity(), OnMapReadyCallback {

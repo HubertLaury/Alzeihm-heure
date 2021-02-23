@@ -2,7 +2,7 @@ package fr.isen.alzeihmheure.firebase
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
-import fr.isen.myapplication.R
+import fr.isen.alzeihmheure.R
 
 
 class AuthenticateActivity : AppCompatActivity() {

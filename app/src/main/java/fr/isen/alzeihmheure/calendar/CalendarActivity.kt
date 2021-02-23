@@ -7,7 +7,7 @@ import android.widget.CalendarView
 import androidx.appcompat.app.AppCompatActivity
 import java.util.*
 import android.widget.TextView
-import fr.isen.myapplication.R
+import fr.isen.alzeihmheure.R
 
 class CalendarActivity : AppCompatActivity() {
     private lateinit var mCalendarView: CalendarView
