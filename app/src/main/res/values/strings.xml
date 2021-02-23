@@ -23,4 +23,9 @@
     <string name="add">Ajouter</string>
     <string name="motif">Motif</string>
     <string name="description">Description</string>
+    <string name="numeros">Numéros utiles</string>
+    <string name="soignant">médecin</string>
+    <string name="pompier">pompier</string>
+    <string name="police">police</string>
+    <string name="samu">samu</string>
 </resources>

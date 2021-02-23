@@ -1,10 +1,8 @@
 package fr.isen.alzeihmheure.member
 
 import android.os.Bundle
-import android.transition.ArcMotion
 import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
-import androidx.fragment.app.FragmentActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
@@ -45,6 +43,7 @@ class MemberActivity : AppCompatActivity() {
     {
         users?.let {
             val adapter = MemberAdapter(it) { user ->
+                Log.d("user", "selected dish ${user.lastname}${user.firstname}${user.email}${user.telephone}${user.adresse}")
                 Log.d("user", "selected dish ${user.lastname}${user.firstname}")
             }
             binding.recyclerView.layoutManager = LinearLayoutManager(this)

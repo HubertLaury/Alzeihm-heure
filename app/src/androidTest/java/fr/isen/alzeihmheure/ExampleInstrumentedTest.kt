@@ -19,6 +19,10 @@ class ExampleInstrumentedTest {
     fun useAppContext() {
         // Context of the app under test.
         val appContext = InstrumentationRegistry.getInstrumentation().targetContext
+<<<<<<< HEAD
+        assertEquals("fr.isen.myapplication", appContext.packageName)
+=======
         assertEquals("fr.isen.alzeihmheure", appContext.packageName)
+>>>>>>> 7b76bedc7c6092f2edd8cce2983086a393ce51ef
     }
 }
