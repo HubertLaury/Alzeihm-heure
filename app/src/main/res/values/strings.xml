@@ -1,0 +1,31 @@
+<resources>
+    <string name="app_name">Alzeihm\'heure</string>
+    <string name="contacts">Membres</string>
+    <string name="calendrier">Calendrier</string>
+    <string name="trajet">Résumé</string>
+    <string name="urgence">Numéros\nutiles</string>
+    <string name="profile">Profile</string>
+    <string name="alerte">Alertes auto</string>
+    <string name="Code">Code</string>
+    <string name="title_activity_maps">Map</string>
+
+    <string name="type">Type</string>
+    <string name="firstname">Prénom</string>
+    <string name="lastname">Nom</string>
+    <string name="email">Email</string>
+    <string name="password">Mot de passe</string>
+    <string name="adresse">Adresse</string>
+    <string name="telephone">Numéro de téléphone</string>
+    <string name="register">Créer un compte</string>
+    <string name="login">S\'enregistrer</string>
+    <string name="date">Date</string>
+    <string name="event">Ajouter un évênement</string>
+    <string name="add">Ajouter</string>
+    <string name="motif">Motif</string>
+    <string name="description">Description</string>
+    <string name="numeros">Numéros utiles</string>
+    <string name="soignant">médecin</string>
+    <string name="pompier">pompier</string>
+    <string name="police">police</string>
+    <string name="samu">samu</string>
+</resources>
