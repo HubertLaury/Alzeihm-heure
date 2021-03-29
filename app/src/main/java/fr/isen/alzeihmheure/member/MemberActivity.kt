@@ -1,28 +1,49 @@
 package fr.isen.alzeihmheure.member
 
+import android.annotation.SuppressLint
+import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import android.util.Log
+import android.view.LayoutInflater
+import android.widget.Button
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
+import fr.isen.alzeihmheure.R
 import fr.isen.alzeihmheure.databinding.ActivityMemberBinding
+
 
 class MemberActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMemberBinding
+    var call: Button? = null
+
+    @SuppressLint("ResourceType")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMemberBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+        //val inflater = LayoutInflater.from(applicationContext)
+        //call = inflater(R.layout.user_cell)
+        call = findViewById<Button>(R.layout.activity_member)
+        call?.setOnClickListener { // TODO Auto-generated method stub
+            val intent = Intent(
+                    Intent.ACTION_DIAL,
+                    Uri.parse("tel: 17")
+            )
+            startActivity(intent)
+        }
+
         val database = FirebaseDatabase.getInstance()
         val myRef = database.getReference("users")
-
         // Read from the database
         myRef.addValueEventListener(object : ValueEventListener {
             override fun onDataChange(dataSnapshot: DataSnapshot) {
-                val list : MutableList<User> = mutableListOf()
+                val list: MutableList<User> = mutableListOf()
                 // This method is called once with the initial value and again
                 // whenever data at this location is updated.
                 for (ds in dataSnapshot.children) {
@@ -44,10 +65,10 @@ class MemberActivity : AppCompatActivity() {
         users?.let {
             val adapter = MemberAdapter(it) { user ->
                 Log.d("user", "selected dish ${user.lastname}${user.firstname}${user.email}${user.telephone}${user.adresse}")
-                Log.d("user", "selected dish ${user.lastname}${user.firstname}")
             }
             binding.recyclerView.layoutManager = LinearLayoutManager(this)
             binding.recyclerView.adapter = adapter
         }
     }
 }
+
