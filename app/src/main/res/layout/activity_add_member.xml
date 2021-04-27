@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -10,12 +11,10 @@
         android:id="@+id/lastnameTextInputLayout"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="24dp"
-        android:layout_marginTop="16dp"
-        android:layout_marginEnd="24dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        android:layout_marginTop="20dp"
+        app:layout_constraintEnd_toEndOf="@+id/selectedImg"
+        app:layout_constraintStart_toStartOf="@+id/selectedImg"
+        app:layout_constraintTop_toBottomOf="@+id/selectedImg">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/lastname"
@@ -97,10 +96,33 @@
         android:id="@+id/btnAdd"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="10dp"
         android:text="@string/add"
         app:layout_constraintEnd_toEndOf="@+id/emailTextInputLayout"
         app:layout_constraintStart_toStartOf="@+id/emailTextInputLayout"
         app:layout_constraintTop_toBottomOf="@+id/emailTextInputLayout" />
+
+    <Button
+        android:id="@+id/btnImport"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="10dp"
+        android:text="Importer Image"
+        app:layout_constraintBottom_toTopOf="@+id/selectedImg"
+        app:layout_constraintEnd_toEndOf="@+id/selectedImg"
+        app:layout_constraintHorizontal_bias="0.461"
+        app:layout_constraintStart_toStartOf="@+id/selectedImg"
+        tools:ignore="MissingConstraints" />
+
+    <ImageView
+        android:id="@+id/selectedImg"
+        android:layout_width="150dp"
+        android:layout_height="150dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.11" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

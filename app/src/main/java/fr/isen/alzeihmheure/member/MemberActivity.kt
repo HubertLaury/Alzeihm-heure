@@ -4,6 +4,7 @@ import android.annotation.SuppressLint
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
+import android.widget.Button
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.firebase.database.DataSnapshot
@@ -43,6 +44,12 @@ class MemberActivity : AppCompatActivity() {
                 Log.d("fail", "failed")
             }
         })
+
+        val button = findViewById<Button>(R.id.add2)
+        button.setOnClickListener {
+            val intent = Intent(this, AddMemberActivity::class.java)
+            startActivity(intent)
+        }
     }
 
     private fun loadList(users: List<User>?)
@@ -58,5 +65,7 @@ class MemberActivity : AppCompatActivity() {
             binding.recyclerView.layoutManager = LinearLayoutManager(this)
         }
     }
+
+
 }
 
