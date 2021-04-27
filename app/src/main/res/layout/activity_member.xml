@@ -30,10 +30,18 @@
                 android:text="@string/contacts"
                 android:textSize="36sp" />
 
+            <Button
+                android:id="@+id/add2"
+                android:layout_width="84dp"
+                android:layout_height="wrap_content"
+                android:background="@drawable/ic_baseline_person_add_24" />
+
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/recyclerView"
                 android:layout_width="match_parent"
                 android:layout_height="600dp" />
+
         </LinearLayout>
     </ScrollView>
+
 </androidx.constraintlayout.widget.ConstraintLayout>

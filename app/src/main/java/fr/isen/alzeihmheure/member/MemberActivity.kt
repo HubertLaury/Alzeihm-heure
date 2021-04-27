@@ -24,6 +24,7 @@ class MemberActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityMemberBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
         val database = FirebaseDatabase.getInstance()
         val myRef = database.getReference("users")
 
@@ -45,6 +46,12 @@ class MemberActivity : AppCompatActivity() {
                 Log.d("fail", "failed")
             }
         })
+
+        val button = findViewById<Button>(R.id.add2)
+        button.setOnClickListener {
+            val intent = Intent(this, AddMemberActivity::class.java)
+            startActivity(intent)
+        }
     }
 
     private fun loadList(users: List<User>?)
@@ -56,8 +63,9 @@ class MemberActivity : AppCompatActivity() {
                 intent.putExtra("user", user)
                 startActivity(intent)
             }
-            binding.recyclerView.layoutManager = LinearLayoutManager(this)
             binding.recyclerView.adapter = adapter
+            binding.recyclerView.layoutManager = LinearLayoutManager(this)
         }
     }
 }
+

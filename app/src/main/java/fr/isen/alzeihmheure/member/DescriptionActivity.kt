@@ -45,11 +45,5 @@ class DescriptionActivity : AppCompatActivity() {
             )
             startActivity(intent)
         }
-
-        val button = findViewById<Button>(R.id.add)
-        button.setOnClickListener {
-            val intent = Intent(this, AddMemberActivity::class.java)
-            startActivity(intent)
-        }
     }
 }
