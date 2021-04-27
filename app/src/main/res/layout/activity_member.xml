@@ -32,7 +32,7 @@
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/recyclerView"
-                android:layout_width="421dp"
+                android:layout_width="match_parent"
                 android:layout_height="600dp" />
         </LinearLayout>
     </ScrollView>

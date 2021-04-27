@@ -1,5 +1,6 @@
 package fr.isen.alzeihmheure.member
 
+import android.annotation.SuppressLint
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
@@ -16,15 +17,13 @@ import fr.isen.alzeihmheure.databinding.ActivityMemberBinding
 import fr.isen.alzeihmheure.databinding.UserCellBinding
 
 class MemberActivity : AppCompatActivity() {
-
     private lateinit var binding: ActivityMemberBinding
 
+    @SuppressLint("ResourceType")
     override fun onCreate(savedInstanceState: Bundle?) {
-
         super.onCreate(savedInstanceState)
         binding = ActivityMemberBinding.inflate(layoutInflater)
         setContentView(binding.root)
-
         val database = FirebaseDatabase.getInstance()
         val myRef = database.getReference("users")
 
@@ -50,9 +49,12 @@ class MemberActivity : AppCompatActivity() {
 
     private fun loadList(users: List<User>?)
     {
-        users?.let {
-            val adapter = MemberAdapter(it) { user ->
-                Log.d("user", "selected dish ${user.lastname}${user.firstname}${user.email}${user.telephone}${user.adresse}")
+            users?.let {
+                val adapter = MemberAdapter(it) { user ->
+                //Log.d("user", "selected dish ${user.lastname}${user.firstname}${user.email}${user.telephone}${user.adresse}${user.picture}")
+                val intent = Intent(this, DescriptionActivity::class.java)
+                intent.putExtra("user", user)
+                startActivity(intent)
             }
             binding.recyclerView.layoutManager = LinearLayoutManager(this)
             binding.recyclerView.adapter = adapter

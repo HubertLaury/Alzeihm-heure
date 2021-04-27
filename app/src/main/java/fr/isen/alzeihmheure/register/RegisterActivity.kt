@@ -12,8 +12,8 @@ import com.google.firebase.auth.AuthResult
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import fr.isen.alzeihmheure.MainActivity
-import fr.isen.alzeihmheure.login.LoginActivity
 import fr.isen.alzeihmheure.databinding.ActivityRegisterBinding
+import fr.isen.alzeihmheure.login.LoginActivity
 
 class RegisterActivity : AppCompatActivity() {
     private lateinit var binding: ActivityRegisterBinding
@@ -33,57 +33,57 @@ class RegisterActivity : AppCompatActivity() {
                 //si rien est saisie pour le prenom on affiche un message grace à un toast
                 TextUtils.isEmpty(binding.firstname.text.toString().trim { it <= ' ' }) -> {
                     Toast.makeText(
-                        this@RegisterActivity,
-                        "Veuillez saisir votre prénom",
-                        Toast.LENGTH_SHORT
+                            this@RegisterActivity,
+                            "Veuillez saisir votre prénom",
+                            Toast.LENGTH_SHORT
                     ).show()
                 }
                 //s'il manque le nom
                 TextUtils.isEmpty(binding.lastname.text.toString().trim { it <= ' ' }) -> {
                     Toast.makeText(
-                        this@RegisterActivity,
-                        "Veuillez saisir votre nom",
-                        Toast.LENGTH_SHORT
+                            this@RegisterActivity,
+                            "Veuillez saisir votre nom",
+                            Toast.LENGTH_SHORT
                     ).show()
                 }
                 //s'il manque l'adresse mail
                 TextUtils.isEmpty(binding.email.text.toString().trim { it <= ' ' }) -> {
                     Toast.makeText(
-                        this@RegisterActivity,
-                        "Veuillez saisir votre email",
-                        Toast.LENGTH_SHORT
+                            this@RegisterActivity,
+                            "Veuillez saisir votre email",
+                            Toast.LENGTH_SHORT
                     ).show()
                 }
                 //si rien est saisie pour le numéro de téléphone on affiche un message grace à un toast
                 TextUtils.isEmpty(binding.telephone.text.toString().trim { it <= ' ' }) -> {
                     Toast.makeText(
-                        this@RegisterActivity,
-                        "Veuillez saisir votre numéro de téléphone",
-                        Toast.LENGTH_SHORT
+                            this@RegisterActivity,
+                            "Veuillez saisir votre numéro de téléphone",
+                            Toast.LENGTH_SHORT
                     ).show()
                 }
                 //si rien est saisie pour l'adresse on affiche un message grace à un toast
                 TextUtils.isEmpty(binding.adresse.text.toString().trim { it <= ' ' }) -> {
                     Toast.makeText(
-                        this@RegisterActivity,
-                        "Veuillez saisir votre adresse",
-                        Toast.LENGTH_SHORT
+                            this@RegisterActivity,
+                            "Veuillez saisir votre adresse",
+                            Toast.LENGTH_SHORT
                     ).show()
                 }
                 //s'il manque le mot de passe
                 TextUtils.isEmpty(binding.password.text.toString().trim { it <= ' ' }) -> {
                     Toast.makeText(
-                        this@RegisterActivity,
-                        "Veuillez saisir votre mot de passe",
-                        Toast.LENGTH_SHORT
+                            this@RegisterActivity,
+                            "Veuillez saisir votre mot de passe",
+                            Toast.LENGTH_SHORT
                     ).show()
                 }
                 //s'il manque le code
                 TextUtils.isEmpty(binding.code.text.toString().trim { it <= ' ' }) -> {
                     Toast.makeText(
-                        this@RegisterActivity,
-                        "Veuillez saisir votre mot de passe",
-                        Toast.LENGTH_SHORT
+                            this@RegisterActivity,
+                            "Veuillez saisir votre mot de passe",
+                            Toast.LENGTH_SHORT
                     ).show()
                 }
                 //si rien n'est vide
@@ -107,9 +107,9 @@ class RegisterActivity : AppCompatActivity() {
                                 val firebaseUser: FirebaseUser = task.result!!.user!!
                                 //on prévient l'utilisateur que l'inscription est validée
                                 Toast.makeText(
-                                    this@RegisterActivity,
-                                    "Inscription réussi",
-                                    Toast.LENGTH_SHORT
+                                        this@RegisterActivity,
+                                        "Inscription réussi",
+                                        Toast.LENGTH_SHORT
                                 ).show()
 
                                 val intent =
@@ -128,9 +128,9 @@ class RegisterActivity : AppCompatActivity() {
                             } else {
                                 //si l'inscription n'est pas validée on affiche un message d'erreur
                                 Toast.makeText(
-                                    this@RegisterActivity,
-                                    task.exception!!.message.toString(),
-                                    Toast.LENGTH_SHORT
+                                        this@RegisterActivity,
+                                        task.exception!!.message.toString(),
+                                        Toast.LENGTH_SHORT
                                 ).show()
                             }
                         })
@@ -142,7 +142,6 @@ class RegisterActivity : AppCompatActivity() {
         val lRegion = arrayOf("Médecin", "Patient", "Famille", "Aide soignant", "Patient")
         val dataAdapterR =
             ArrayAdapter(this, R.layout.simple_spinner_item, lRegion)
-        dataAdapterR.setDropDownViewResource(R.layout.simple_spinner_dropdown_item)
         dataAdapterR.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
         spinner.adapter = dataAdapterR
 
