@@ -12,8 +12,9 @@ import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
 import fr.isen.alzeihmheure.R
+import fr.isen.alzeihmheure.calendar.CalendarActivity
 import fr.isen.alzeihmheure.databinding.ActivityMemberBinding
-
+import fr.isen.alzeihmheure.databinding.UserCellBinding
 
 class MemberActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMemberBinding
@@ -26,10 +27,11 @@ class MemberActivity : AppCompatActivity() {
 
         val database = FirebaseDatabase.getInstance()
         val myRef = database.getReference("users")
+
         // Read from the database
         myRef.addValueEventListener(object : ValueEventListener {
             override fun onDataChange(dataSnapshot: DataSnapshot) {
-                val list: MutableList<User> = mutableListOf()
+                val list : MutableList<User> = mutableListOf()
                 // This method is called once with the initial value and again
                 // whenever data at this location is updated.
                 for (ds in dataSnapshot.children) {
@@ -65,7 +67,5 @@ class MemberActivity : AppCompatActivity() {
             binding.recyclerView.layoutManager = LinearLayoutManager(this)
         }
     }
-
-
 }
 
