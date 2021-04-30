@@ -4,6 +4,8 @@ import android.Manifest
 import android.content.pm.PackageManager
 import android.location.Location
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
 import android.widget.Toast
 import androidx.annotation.NonNull
 import androidx.appcompat.app.AppCompatActivity
@@ -31,6 +33,9 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_maps)
+
+
+
         fusedLocationProviderClient =  LocationServices.getFusedLocationProviderClient(this@MapsActivity)
         fetchLocation()
     }
@@ -52,6 +57,12 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
                 Toast.makeText(applicationContext, currentLocation.latitude.toString() + "" +
                         currentLocation.longitude, Toast.LENGTH_SHORT).show()
 
+                val database = FirebaseDatabase.getInstance()
+                val myRefLat = database.getReference("users/user1/coordonnées/latitude")
+                val myRefLon = database.getReference("users/user1/coordonnées/longitude")
+                myRefLat.child("TABLE_NAME").child("latitude").setValue(currentLocation.latitude);
+                myRefLon.child("TABLE_NAME").child("longitude").setValue(currentLocation.longitude);
+
                 val supportMapFragment = (supportFragmentManager.findFragmentById(R.id.map) as
                         SupportMapFragment?)!!
                 supportMapFragment.getMapAsync(this@MapsActivity)
@@ -61,11 +72,17 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
 
     override fun onMapReady(googleMap: GoogleMap) {
         val latLng = LatLng(currentLocation.latitude, currentLocation.longitude)
-        val markerOptions = MarkerOptions().position(latLng).title("I am here!")
         googleMap?.animateCamera(CameraUpdateFactory.newLatLng(latLng))
         googleMap?.animateCamera(CameraUpdateFactory.newLatLngZoom(latLng, 5f))
-        googleMap?.addMarker(markerOptions)
+
+        val monMarker = googleMap.addMarker(MarkerOptions().position(latLng).title("je suis ou?"))
+       monMarker.setPosition(latLng);
+
+
+
     }
+
+
 
     override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<String?>,
                                             grantResults: IntArray) {
