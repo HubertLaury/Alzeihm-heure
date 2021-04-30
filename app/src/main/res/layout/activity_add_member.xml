@@ -12,9 +12,9 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
-        app:layout_constraintEnd_toEndOf="@+id/selectedImg"
-        app:layout_constraintStart_toStartOf="@+id/selectedImg"
-        app:layout_constraintTop_toBottomOf="@+id/selectedImg">
+        app:layout_constraintEnd_toEndOf="@+id/picture"
+        app:layout_constraintStart_toStartOf="@+id/picture"
+        app:layout_constraintTop_toBottomOf="@+id/picture">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/lastname"
@@ -108,14 +108,14 @@
         android:layout_height="wrap_content"
         android:layout_marginBottom="10dp"
         android:text="Importer Image"
-        app:layout_constraintBottom_toTopOf="@+id/selectedImg"
-        app:layout_constraintEnd_toEndOf="@+id/selectedImg"
+        app:layout_constraintBottom_toTopOf="@+id/picture"
+        app:layout_constraintEnd_toEndOf="@+id/picture"
         app:layout_constraintHorizontal_bias="0.461"
-        app:layout_constraintStart_toStartOf="@+id/selectedImg"
+        app:layout_constraintStart_toStartOf="@+id/picture"
         tools:ignore="MissingConstraints" />
 
     <ImageView
-        android:id="@+id/selectedImg"
+        android:id="@+id/picture"
         android:layout_width="150dp"
         android:layout_height="150dp"
         app:layout_constraintBottom_toBottomOf="parent"
