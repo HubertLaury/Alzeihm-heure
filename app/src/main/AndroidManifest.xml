@@ -5,7 +5,8 @@
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.CALL_PHONE" />
     <uses-permission android:name="android.permission.READ_CALENDAR" />
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.INTERNET" />
 
     <application
         android:allowBackup="true"
@@ -14,7 +15,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.Alzeihmheure">
-        <activity android:name=".member.AddMemberActivity"></activity>
+
+        <activity android:name=".member.AddMemberActivity" />
         <activity android:name=".member.DescriptionActivity" />
 
         <meta-data
@@ -30,7 +32,9 @@
         <activity android:name=".calendar.CalendarActivity" />
         <activity android:name=".register.RegisterActivity" />
         <activity android:name=".login.LoginActivity" />
-        <activity android:name=".MainActivity">
+        <activity android:name=".MainActivity"/>
+            <activity android:name=".test.TestActivity">
+
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

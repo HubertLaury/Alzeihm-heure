@@ -1,5 +1,6 @@
 package fr.isen.alzeihmheure.member
 
+import android.app.ProgressDialog
 import android.content.Intent
 import android.graphics.BitmapFactory
 import android.net.Uri
@@ -9,9 +10,11 @@ import android.widget.Button
 import android.widget.ImageView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import com.google.firebase.storage.StorageReference
 import fr.isen.alzeihmheure.databinding.ActivityAddMemberBinding
 import java.io.FileNotFoundException
 import java.io.InputStream
+import java.util.*
 
 
 class AddMemberActivity : AppCompatActivity() {
@@ -27,12 +30,12 @@ class AddMemberActivity : AppCompatActivity() {
 
         btnImport = findViewById(fr.isen.alzeihmheure.R.id.btnImport)
         selectedImg = findViewById(fr.isen.alzeihmheure.R.id.selectedImg)
-        btnImport?.setOnClickListener(object : View.OnClickListener {
+        binding.btnImport?.setOnClickListener(object : View.OnClickListener {
             override fun onClick(v: View?) {
                 val photoPickerIntent = Intent(Intent.ACTION_PICK)
                 photoPickerIntent.type = "image/*"
-                intent.setAction(Intent.ACTION_GET_CONTENT);
-                startActivityForResult(photoPickerIntent, RESULT_LOAD_IMG);
+                intent.setAction(Intent.ACTION_GET_CONTENT)
+                startActivityForResult(photoPickerIntent, RESULT_LOAD_IMG)
             }
         })
     }

@@ -34,8 +34,6 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_maps)
 
-
-
         fusedLocationProviderClient =  LocationServices.getFusedLocationProviderClient(this@MapsActivity)
         fetchLocation()
     }
@@ -60,8 +58,8 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
                 val database = FirebaseDatabase.getInstance()
                 val myRefLat = database.getReference("users/user1/coordonnées/latitude")
                 val myRefLon = database.getReference("users/user1/coordonnées/longitude")
-                myRefLat.child("TABLE_NAME").child("latitude").setValue(currentLocation.latitude);
-                myRefLon.child("TABLE_NAME").child("longitude").setValue(currentLocation.longitude);
+                myRefLat.child("TABLE_NAME").child("latitude").setValue(currentLocation.latitude)
+                myRefLon.child("TABLE_NAME").child("longitude").setValue(currentLocation.longitude)
 
                 val supportMapFragment = (supportFragmentManager.findFragmentById(R.id.map) as
                         SupportMapFragment?)!!
@@ -77,12 +75,7 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
 
         val monMarker = googleMap.addMarker(MarkerOptions().position(latLng).title("je suis ou?"))
        monMarker.setPosition(latLng);
-
-
-
     }
-
-
 
     override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<String?>,
                                             grantResults: IntArray) {
