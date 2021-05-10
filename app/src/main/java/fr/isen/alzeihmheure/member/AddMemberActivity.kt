@@ -6,44 +6,60 @@ import android.net.Uri
 import android.os.Bundle
 import android.text.TextUtils
 import android.view.View
-import android.widget.Button
-import android.widget.ImageView
-import android.widget.Toast
+import android.webkit.MimeTypeMap
+import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
+import com.bumptech.glide.Glide
+import com.google.android.gms.tasks.Continuation
+import com.google.android.gms.tasks.Task
 import com.google.firebase.database.*
+import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.storage.FirebaseStorage
+import com.google.firebase.storage.StorageReference
+import com.google.firebase.storage.UploadTask
 import fr.isen.alzeihmheure.R
 import fr.isen.alzeihmheure.databinding.ActivityAddMemberBinding
 import java.io.FileNotFoundException
 import java.io.InputStream
-
+import java.util.*
 
 class AddMemberActivity : AppCompatActivity() {
     private lateinit var binding: ActivityAddMemberBinding
     private lateinit var btnImport: Button
+    private lateinit var buttonUpload: Button
     private lateinit var picture: ImageView
     private lateinit var btnAdd: Button
+    private var filePath: Uri? = null
+    private var format: TextView? = null
+    private var firebaseStore: FirebaseStorage? = null
+    private var storageReference: StorageReference? = null
     val RESULT_LOAD_IMG = 1
 
-    //lateinit var memberInfo: MemberInfo
-
     override fun onCreate(savedInstanceState: Bundle?) {
+
+        firebaseStore = FirebaseStorage.getInstance()
+        storageReference = FirebaseStorage.getInstance().reference
+
         super.onCreate(savedInstanceState)
         binding = ActivityAddMemberBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        btnImport = findViewById(fr.isen.alzeihmheure.R.id.btnImport)
-        picture = findViewById(fr.isen.alzeihmheure.R.id.picture)
+        format = findViewById(R.id.format)
+        btnImport = findViewById(R.id.btnImport)
+        picture = findViewById(R.id.picture)
+        val editText = findViewById<EditText>(R.id.nom)
+
         binding.btnImport.setOnClickListener(object : View.OnClickListener {
             override fun onClick(v: View?) {
-                val photoPickerIntent = Intent(Intent.ACTION_PICK)
-                photoPickerIntent.type = "image/*"
-                intent.setAction(Intent.ACTION_GET_CONTENT)
-                startActivityForResult(photoPickerIntent, RESULT_LOAD_IMG);
+                val name: String = editText.getText().toString()
+                binding.format.setText(name)
+                selectPicture()
             }
         })
 
         btnAdd = findViewById(R.id.btnAdd)
         binding.btnAdd.setOnClickListener {
+            uploadImage()
             when {
                 //si rien est saisie pour le prenom on affiche un message grace à un toast
                 TextUtils.isEmpty(binding.firstname.text.toString().trim { it <= ' ' }) -> {
@@ -102,10 +118,13 @@ class AddMemberActivity : AppCompatActivity() {
                  val adresse: String = binding.adresse.text.toString()
                  val email: String = binding.email.text.toString()
                  val telephone: String = binding.telephone.text.toString()
-                 //val picture: String = binding.picture.toString()
+                 val ImageStore = FirebaseStorage.getInstance().reference.child("uploads/").downloadUrl
+                 val url = "https://firebasestorage.googleapis.com/v0/b/alzheimheure.appspot.com/o/uploads%2Fmtp.jpg?alt=media&token=37833540-7b87-4d49-bdd8-922133aa00ac"
 
-                 // below 3 lines of code is used to set
-                 // data in our object class.
+                 ImageStore.addOnSuccessListener { uri -> //Setting the image to imageView using Glide Library
+                     Glide.with(binding.picture.context).load(url).into(picture)
+                 }
+
                  val firebaseDatabase = FirebaseDatabase.getInstance().getReference("users")
                  val uploadId = firebaseDatabase.push().key
 
@@ -116,7 +135,7 @@ class AddMemberActivity : AppCompatActivity() {
                          // inside the method of on Data change we are setting
                          // our object class to our database reference.
                          // data base reference will sends data to firebase.
-                         val user = User(firstname, lastname, email, telephone, adresse)
+                         val user = User(firstname, lastname, email, telephone, adresse, picture.toString())
                          firebaseDatabase.child(uploadId!!).setValue(user)
 
                          // after adding this data we are showing toast message.
@@ -134,14 +153,71 @@ class AddMemberActivity : AppCompatActivity() {
         }
     }
 
+    private fun addUploadRecordToDb(uri: String){
+        val db = FirebaseFirestore.getInstance()
+        val data = HashMap<String, Any>()
+        data["imageUrl"] = uri
+
+        db.collection("")
+                .add(data)
+                .addOnSuccessListener { documentReference ->
+                    Toast.makeText(this, "Saved to DB", Toast.LENGTH_LONG).show()
+                }
+                .addOnFailureListener { e ->
+                    Toast.makeText(this, "Error saving to DB", Toast.LENGTH_LONG).show()
+                }
+    }
+
+    private fun uploadImage(){
+        if(filePath != null){
+            val name: String = binding.nom.text.toString()+"."+GetFileExtension(filePath)
+            val ref = storageReference?.child("uploads/" + name)
+            val uploadTask = ref?.putFile(filePath!!)
+
+            val urlTask = uploadTask?.continueWithTask(Continuation<UploadTask.TaskSnapshot, Task<Uri>> { task ->
+                if (!task.isSuccessful) {
+                    task.exception?.let {
+                        throw it
+                    }
+                }
+                return@Continuation ref.downloadUrl
+            })?.addOnCompleteListener { task ->
+                if (task.isSuccessful) {
+                    val downloadUri = task.result
+                    addUploadRecordToDb(downloadUri.toString())
+                }
+            }?.addOnFailureListener{}
+        }else{
+            Toast.makeText(this, "Please Upload an Image", Toast.LENGTH_SHORT).show()
+        }
+    }
+
+    fun GetFileExtension(uri: Uri?): String? {
+        val contentResolver = contentResolver
+        val mimeTypeMap = MimeTypeMap.getSingleton()
+
+        // Returning the file Extension.
+        return mimeTypeMap.getExtensionFromMimeType(contentResolver.getType(uri!!))
+    }
+
+    private fun selectPicture() {
+        val photoPickerIntent = Intent(Intent.ACTION_PICK)
+        photoPickerIntent.type = "image/*"
+        intent.setAction(Intent.ACTION_GET_CONTENT)
+        startActivityForResult(photoPickerIntent, RESULT_LOAD_IMG)
+    }
+
     override fun onActivityResult(reqCode: Int, resultCode: Int, data: Intent?) {
+
         super.onActivityResult(reqCode, resultCode, data)
         if (resultCode == RESULT_OK) {
             try {
                 val imageUri: Uri? = data?.data
                 val imageStream: InputStream? = imageUri?.let { contentResolver.openInputStream(it) }
                 val selectedImage = BitmapFactory.decodeStream(imageStream)
-                picture.setImageBitmap(selectedImage)
+                picture?.setImageBitmap(selectedImage)
+                filePath = data?.data
+
             } catch (e: FileNotFoundException) {
                 e.printStackTrace()
                 Toast.makeText(applicationContext, "Une erreur s'est produite", Toast.LENGTH_LONG).show()
@@ -151,3 +227,4 @@ class AddMemberActivity : AppCompatActivity() {
         }
     }
 }
+

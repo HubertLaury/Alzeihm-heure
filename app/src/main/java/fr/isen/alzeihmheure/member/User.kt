@@ -1,9 +1,12 @@
 package fr.isen.alzeihmheure.member
 
+import android.net.Uri
+import android.widget.ImageView
+import com.google.android.gms.tasks.Task
 import java.io.Serializable
 
-class User(
-        val lastname: String? = "",
+public class User(
+        val lastname: String = "",
         val email: String = "",
         val adresse: String = "",
         val firstname: String = "",
@@ -11,3 +14,4 @@ class User(
         val picture: String = "",
         val password: String = ""): Serializable {
 }
+

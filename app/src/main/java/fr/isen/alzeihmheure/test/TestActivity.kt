@@ -4,6 +4,7 @@ import android.content.Intent
 import android.graphics.BitmapFactory
 import android.net.Uri
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import android.webkit.MimeTypeMap
 import android.widget.*
@@ -67,7 +68,7 @@ class TestActivity : AppCompatActivity() {
         val data = HashMap<String, Any>()
         data["imageUrl"] = uri
 
-        db.collection("")
+        db.collection("uploads/")
                 .add(data)
                 .addOnSuccessListener { documentReference ->
                     Toast.makeText(this, "Saved to DB", Toast.LENGTH_LONG).show()
@@ -87,7 +88,9 @@ class TestActivity : AppCompatActivity() {
             val urlTask = uploadTask?.continueWithTask(Continuation<UploadTask.TaskSnapshot, Task<Uri>> { task ->
                 if (!task.isSuccessful) {
                     task.exception?.let {
+                        Log.d("URL", ref.downloadUrl.toString())
                         throw it
+
                     }
                 }
                 return@Continuation ref.downloadUrl
