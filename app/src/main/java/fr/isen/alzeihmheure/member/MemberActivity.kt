@@ -54,8 +54,8 @@ class MemberActivity : AppCompatActivity() {
 
     private fun loadList(users: List<User>?)
     {
-            users?.let {
-                val adapter = MemberAdapter(it) { user ->
+        users?.let {
+            val adapter = MemberAdapter(it) { user ->
                 //Log.d("user", "selected dish ${user.lastname}${user.firstname}${user.email}${user.telephone}${user.adresse}${user.picture}")
                 val intent = Intent(this, DescriptionActivity::class.java)
                 intent.putExtra("user", user)
@@ -66,4 +66,3 @@ class MemberActivity : AppCompatActivity() {
         }
     }
 }
-

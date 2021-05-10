@@ -15,6 +15,10 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.Alzeihmheure">
+        <service
+            android:name=".map.TrackingService"
+            android:enabled="true"
+            android:exported="true"></service>
 
         <activity android:name=".member.AddMemberActivity" />
         <activity android:name=".member.DescriptionActivity" />
@@ -32,9 +36,7 @@
         <activity android:name=".calendar.CalendarActivity" />
         <activity android:name=".register.RegisterActivity" />
         <activity android:name=".login.LoginActivity" />
-        <activity android:name=".MainActivity"/>
-            <activity android:name=".test.TestActivity">
-
+        <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

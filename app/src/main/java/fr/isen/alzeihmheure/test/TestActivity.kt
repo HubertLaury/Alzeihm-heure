@@ -4,6 +4,7 @@ import android.content.Intent
 import android.graphics.BitmapFactory
 import android.net.Uri
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import android.webkit.MimeTypeMap
 import android.widget.*
@@ -81,12 +82,14 @@ class TestActivity : AppCompatActivity() {
         if(filePath != null){
             val name: String = binding.nom.text.toString()+"."+GetFileExtension(filePath)
 
+
             val ref = storageReference?.child("uploads/"+name)
             val uploadTask = ref?.putFile(filePath!!)
 
             val urlTask = uploadTask?.continueWithTask(Continuation<UploadTask.TaskSnapshot, Task<Uri>> { task ->
                 if (!task.isSuccessful) {
                     task.exception?.let {
+                        Log.d("URL", storageReference?.downloadUrl.toString())
                         throw it
                     }
                 }

@@ -93,46 +93,51 @@ class AddMemberActivity : AppCompatActivity() {
                             Toast.LENGTH_SHORT
                     ).show()
                 }
-             else -> {
-                // else call the method to add
-                // data to our database.
-                 // getting text from our edittext fields.
-                 val firstname: String = binding.firstname.text.toString()
-                 val lastname: String = binding.lastname.text.toString()
-                 val adresse: String = binding.adresse.text.toString()
-                 val email: String = binding.email.text.toString()
-                 val telephone: String = binding.telephone.text.toString()
-                 //val picture: String = binding.picture.toString()
+                else -> {
+                    // else call the method to add
+                    // data to our database.
+                    // getting text from our edittext fields.
+                    val firstname: String = binding.firstname.text.toString()
+                    val lastname: String = binding.lastname.text.toString()
+                    val adresse: String = binding.adresse.text.toString()
+                    val email: String = binding.email.text.toString()
+                    val telephone: String = binding.telephone.text.toString()
+                    val picture: ImageView = binding.picture
 
-                 // below 3 lines of code is used to set
-                 // data in our object class.
-                 val firebaseDatabase = FirebaseDatabase.getInstance().getReference("users")
-                 val uploadId = firebaseDatabase.push().key
+                    // below 3 lines of code is used to set
+                    // data in our object class.
+                    val firebaseDatabase = FirebaseDatabase.getInstance().getReference("users")
+                    val uploadId = firebaseDatabase.push().key
 
-                 // we are use add value event listener method
-                 // which is called with database reference.
-                 firebaseDatabase.addValueEventListener(object : ValueEventListener {
-                     override fun onDataChange(snapshot: DataSnapshot) {
-                         // inside the method of on Data change we are setting
-                         // our object class to our database reference.
-                         // data base reference will sends data to firebase.
-                         val user = User(firstname, lastname, email, telephone, adresse)
-                         firebaseDatabase.child(uploadId!!).setValue(user)
 
-                         // after adding this data we are showing toast message.
-                         Toast.makeText(this@AddMemberActivity, "data added", Toast.LENGTH_SHORT).show()
-                     }
 
-                     override fun onCancelled(error: DatabaseError) {
-                         // if the data is not added or it is cancelled then
-                         // we are displaying a failure toast message.
-                         Toast.makeText(this@AddMemberActivity, "Fail to add data $error", Toast.LENGTH_SHORT).show()
-                     }
-                 })
-            }
+
+                    // we are use add value event listener method
+                    // which is called with database reference.
+                    firebaseDatabase.addValueEventListener(object : ValueEventListener {
+                        override fun onDataChange(snapshot: DataSnapshot) {
+                            // inside the method of on Data change we are setting
+                            // our object class to our database reference.
+                            // data base reference will sends data to firebase.
+                            val user = User(firstname, lastname, email, telephone, adresse, picture)
+                            firebaseDatabase.child(uploadId!!).setValue(user)
+
+                            // after adding this data we are showing toast message.
+                            Toast.makeText(this@AddMemberActivity, "data added", Toast.LENGTH_SHORT).show()
+                        }
+
+                        override fun onCancelled(error: DatabaseError) {
+                            // if the data is not added or it is cancelled then
+                            // we are displaying a failure toast message.
+                            Toast.makeText(this@AddMemberActivity, "Fail to add data $error", Toast.LENGTH_SHORT).show()
+                        }
+                    })
+                }
             }
         }
     }
+
+
 
     override fun onActivityResult(reqCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(reqCode, resultCode, data)
