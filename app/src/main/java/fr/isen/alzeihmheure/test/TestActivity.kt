@@ -68,7 +68,7 @@ class TestActivity : AppCompatActivity() {
         val data = HashMap<String, Any>()
         data["imageUrl"] = uri
 
-        db.collection("")
+        db.collection("uploads/")
                 .add(data)
                 .addOnSuccessListener { documentReference ->
                     Toast.makeText(this, "Saved to DB", Toast.LENGTH_LONG).show()
@@ -82,15 +82,15 @@ class TestActivity : AppCompatActivity() {
         if(filePath != null){
             val name: String = binding.nom.text.toString()+"."+GetFileExtension(filePath)
 
-
             val ref = storageReference?.child("uploads/"+name)
             val uploadTask = ref?.putFile(filePath!!)
 
             val urlTask = uploadTask?.continueWithTask(Continuation<UploadTask.TaskSnapshot, Task<Uri>> { task ->
                 if (!task.isSuccessful) {
                     task.exception?.let {
-                        Log.d("URL", storageReference?.downloadUrl.toString())
+                        Log.d("URL", ref.downloadUrl.toString())
                         throw it
+
                     }
                 }
                 return@Continuation ref.downloadUrl
