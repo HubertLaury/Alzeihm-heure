@@ -1,8 +1,6 @@
 package fr.isen.alzeihmheure.member
 
-import android.net.Uri
-import android.widget.ImageView
-import com.google.android.gms.tasks.Task
+import com.google.firebase.storage.StorageReference
 import java.io.Serializable
 
 public class User(
@@ -13,5 +11,7 @@ public class User(
         val telephone: String = "",
         val picture: String = "",
         val password: String = ""): Serializable {
+
+
 }
 
