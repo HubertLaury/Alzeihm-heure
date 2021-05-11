@@ -74,7 +74,7 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
     override fun onMapReady(googleMap: GoogleMap) {
         val latLng = LatLng(currentLocation.latitude, currentLocation.longitude)
         googleMap?.animateCamera(CameraUpdateFactory.newLatLng(latLng))
-        googleMap?.animateCamera(CameraUpdateFactory.newLatLngZoom(latLng, 5f))
+        googleMap?.animateCamera(CameraUpdateFactory.newLatLngZoom(latLng, 15f))
 
         val monMarker = googleMap.addMarker(MarkerOptions().position(latLng).title("je suis ou?"))
        monMarker.setPosition(latLng);
