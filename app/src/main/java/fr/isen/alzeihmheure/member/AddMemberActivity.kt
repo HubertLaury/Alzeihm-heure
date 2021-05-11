@@ -5,6 +5,7 @@ import android.graphics.BitmapFactory
 import android.net.Uri
 import android.os.Bundle
 import android.text.TextUtils
+import android.util.Log
 import android.view.View
 import android.webkit.MimeTypeMap
 import android.widget.*
@@ -26,7 +27,7 @@ import java.util.*
 class AddMemberActivity : AppCompatActivity() {
     private lateinit var binding: ActivityAddMemberBinding
     private lateinit var btnImport: Button
-    private lateinit var buttonUpload: Button
+    private lateinit var btnUpload: Button
     private lateinit var picture: ImageView
     private lateinit var btnAdd: Button
     private var filePath: Uri? = null
@@ -46,6 +47,7 @@ class AddMemberActivity : AppCompatActivity() {
 
         format = findViewById(R.id.format)
         btnImport = findViewById(R.id.btnImport)
+        btnUpload = findViewById(R.id.btnUpload)
         picture = findViewById(R.id.picture)
         val editText = findViewById<EditText>(R.id.nom)
 
@@ -57,9 +59,13 @@ class AddMemberActivity : AppCompatActivity() {
             }
         })
 
+        binding.btnUpload.setOnClickListener {
+            this@AddMemberActivity
+            uploadImage()
+        }
+
         btnAdd = findViewById(R.id.btnAdd)
         binding.btnAdd.setOnClickListener {
-            uploadImage()
             when {
                 //si rien est saisie pour le prenom on affiche un message grace à un toast
                 TextUtils.isEmpty(binding.firstname.text.toString().trim { it <= ' ' }) -> {
@@ -110,23 +116,22 @@ class AddMemberActivity : AppCompatActivity() {
                     ).show()
                 }
              else -> {
-                // else call the method to add
-                // data to our database.
+                 // else call the method to add
+                 // data to our database.
                  // getting text from our edittext fields.
+                 val firebaseDatabase = FirebaseDatabase.getInstance().getReference("users/")
+                 val uploadId = firebaseDatabase.push().key
                  val firstname: String = binding.firstname.text.toString()
                  val lastname: String = binding.lastname.text.toString()
                  val adresse: String = binding.adresse.text.toString()
                  val email: String = binding.email.text.toString()
                  val telephone: String = binding.telephone.text.toString()
-                 val ImageStore = FirebaseStorage.getInstance().reference.child("uploads/").downloadUrl
-                 val url = "https://firebasestorage.googleapis.com/v0/b/alzheimheure.appspot.com/o/uploads%2Fmtp.jpg?alt=media&token=37833540-7b87-4d49-bdd8-922133aa00ac"
+                 val name: String = binding.nom.text.toString()+"."+GetFileExtension(filePath)
+                 val ImageStore = storageReference!!.child("uploads/" + name)
 
-                 ImageStore.addOnSuccessListener { uri -> //Setting the image to imageView using Glide Library
-                     Glide.with(binding.picture.context).load(url).into(picture)
-                 }
-
-                 val firebaseDatabase = FirebaseDatabase.getInstance().getReference("users")
-                 val uploadId = firebaseDatabase.push().key
+                 ImageStore.downloadUrl.addOnSuccessListener {
+                     //Glide.with(this@AddMemberActivity).load(ImageStore).into(picture)
+                    val picture = ImageStore.toString()
 
                  // we are use add value event listener method
                  // which is called with database reference.
@@ -135,7 +140,7 @@ class AddMemberActivity : AppCompatActivity() {
                          // inside the method of on Data change we are setting
                          // our object class to our database reference.
                          // data base reference will sends data to firebase.
-                         val user = User(firstname, lastname, email, telephone, adresse, picture.toString())
+                         val user = User(firstname, lastname, email, telephone, adresse, picture)
                          firebaseDatabase.child(uploadId!!).setValue(user)
 
                          // after adding this data we are showing toast message.
@@ -148,6 +153,7 @@ class AddMemberActivity : AppCompatActivity() {
                          Toast.makeText(this@AddMemberActivity, "Fail to add data $error", Toast.LENGTH_SHORT).show()
                      }
                  })
+                 }
             }
             }
         }
@@ -158,7 +164,7 @@ class AddMemberActivity : AppCompatActivity() {
         val data = HashMap<String, Any>()
         data["imageUrl"] = uri
 
-        db.collection("")
+        db.collection("uploads/")
                 .add(data)
                 .addOnSuccessListener { documentReference ->
                     Toast.makeText(this, "Saved to DB", Toast.LENGTH_LONG).show()
@@ -174,13 +180,14 @@ class AddMemberActivity : AppCompatActivity() {
             val ref = storageReference?.child("uploads/" + name)
             val uploadTask = ref?.putFile(filePath!!)
 
-            val urlTask = uploadTask?.continueWithTask(Continuation<UploadTask.TaskSnapshot, Task<Uri>> { task ->
+            val urlTask = uploadTask?.continueWithTask(Continuation<UploadTask.TaskSnapshot, Task<Uri>> AddMemberActivity@{ task ->
                 if (!task.isSuccessful) {
                     task.exception?.let {
+                        Log.d("URL", ref.downloadUrl.toString())
                         throw it
                     }
                 }
-                return@Continuation ref.downloadUrl
+                return@AddMemberActivity ref.downloadUrl
             })?.addOnCompleteListener { task ->
                 if (task.isSuccessful) {
                     val downloadUri = task.result
@@ -215,7 +222,7 @@ class AddMemberActivity : AppCompatActivity() {
                 val imageUri: Uri? = data?.data
                 val imageStream: InputStream? = imageUri?.let { contentResolver.openInputStream(it) }
                 val selectedImage = BitmapFactory.decodeStream(imageStream)
-                picture?.setImageBitmap(selectedImage)
+                picture.setImageBitmap(selectedImage)
                 filePath = data?.data
 
             } catch (e: FileNotFoundException) {
