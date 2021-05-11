@@ -19,6 +19,7 @@ import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.StorageReference
 import com.google.firebase.storage.UploadTask
 import fr.isen.alzeihmheure.R
+import fr.isen.alzeihmheure.calendar.CalendarActivity
 import fr.isen.alzeihmheure.databinding.ActivityAddMemberBinding
 import java.io.FileNotFoundException
 import java.io.InputStream
@@ -126,12 +127,32 @@ class AddMemberActivity : AppCompatActivity() {
                  val adresse: String = binding.adresse.text.toString()
                  val email: String = binding.email.text.toString()
                  val telephone: String = binding.telephone.text.toString()
-                 val name: String = binding.nom.text.toString()+"."+GetFileExtension(filePath)
-                 val ImageStore = storageReference!!.child("uploads/" + name)
+                 val name: String = binding.nom.text.toString()+"."+getFileExtension(filePath)
+                 val ImageStore = storageReference!!.child("uploads/$name").getDownloadUrl()
+                         ImageStore.addOnSuccessListener {
+                     val ref: String = ImageStore.toString()
+                     firebaseDatabase.addValueEventListener(object : ValueEventListener {
+                         override fun onDataChange(snapshot: DataSnapshot) {
+                             // inside the method of on Data change we are setting
+                             // our object class to our database reference.
+                             // data base reference will sends data to firebase.
+                             val user = User(firstname, lastname, email, telephone, adresse, ref)
+                             firebaseDatabase.child(uploadId!!).setValue(user)
 
-                 ImageStore.downloadUrl.addOnSuccessListener {
-                     //Glide.with(this@AddMemberActivity).load(ImageStore).into(picture)
-                    val picture = ImageStore.toString()
+                             // after adding this data we are showing toast message.
+                             Toast.makeText(this@AddMemberActivity, "data added", Toast.LENGTH_SHORT).show()
+                         }
+
+                         override fun onCancelled(error: DatabaseError) {
+                             // if the data is not added or it is cancelled then
+                             // we are displaying a failure toast message.
+                             Toast.makeText(this@AddMemberActivity, "Fail to add data $error", Toast.LENGTH_SHORT).show()
+                         }
+                     })
+                 }
+
+                 ImageStore.addOnSuccessListener {
+
 
                  // we are use add value event listener method
                  // which is called with database reference.
@@ -140,7 +161,7 @@ class AddMemberActivity : AppCompatActivity() {
                          // inside the method of on Data change we are setting
                          // our object class to our database reference.
                          // data base reference will sends data to firebase.
-                         val user = User(firstname, lastname, email, telephone, adresse, picture)
+                         val user = User(firstname, lastname, email, telephone, adresse, "https://firebasestorage.googleapis.com/v0/b/alzheimheure.appspot.com/o/uploads%2Fdrtfj.jpg?alt=media&token=b2e08db1-ff8b-4e4c-96ac-2352a299064d")
                          firebaseDatabase.child(uploadId!!).setValue(user)
 
                          // after adding this data we are showing toast message.
@@ -156,6 +177,8 @@ class AddMemberActivity : AppCompatActivity() {
                  }
             }
             }
+            val intent = Intent(this, MemberActivity::class.java)
+            startActivity(intent)
         }
     }
 
@@ -176,30 +199,29 @@ class AddMemberActivity : AppCompatActivity() {
 
     private fun uploadImage(){
         if(filePath != null){
-            val name: String = binding.nom.text.toString()+"."+GetFileExtension(filePath)
-            val ref = storageReference?.child("uploads/" + name)
+            val name: String = binding.nom.text.toString()+"."+getFileExtension(filePath)
+            val ref = storageReference?.child("uploads/$name")
             val uploadTask = ref?.putFile(filePath!!)
 
-            val urlTask = uploadTask?.continueWithTask(Continuation<UploadTask.TaskSnapshot, Task<Uri>> AddMemberActivity@{ task ->
+            uploadTask!!.continueWithTask(Continuation<UploadTask.TaskSnapshot, Task<Uri>> AddMemberActivity@{ task ->
                 if (!task.isSuccessful) {
                     task.exception?.let {
-                        Log.d("URL", ref.downloadUrl.toString())
                         throw it
                     }
                 }
                 return@AddMemberActivity ref.downloadUrl
-            })?.addOnCompleteListener { task ->
+            }).addOnCompleteListener { task ->
                 if (task.isSuccessful) {
                     val downloadUri = task.result
                     addUploadRecordToDb(downloadUri.toString())
                 }
-            }?.addOnFailureListener{}
+            }.addOnFailureListener{}
         }else{
             Toast.makeText(this, "Please Upload an Image", Toast.LENGTH_SHORT).show()
         }
     }
 
-    fun GetFileExtension(uri: Uri?): String? {
+    fun getFileExtension(uri: Uri?): String? {
         val contentResolver = contentResolver
         val mimeTypeMap = MimeTypeMap.getSingleton()
 
