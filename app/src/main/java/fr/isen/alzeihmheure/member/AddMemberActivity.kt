@@ -60,7 +60,6 @@ class AddMemberActivity : AppCompatActivity() {
         })
 
         binding.btnUpload.setOnClickListener {
-            this@AddMemberActivity
             uploadImage()
         }
 
@@ -129,11 +128,11 @@ class AddMemberActivity : AppCompatActivity() {
                  val name: String = binding.nom.text.toString()+"."+GetFileExtension(filePath)
                  val ImageStore = storageReference!!.child("uploads/" + name)
 
-                 ImageStore.downloadUrl.addOnSuccessListener {
-                     //Glide.with(this@AddMemberActivity).load(ImageStore).into(picture)
-                    val picture = ImageStore.toString()
-
-                 // we are use add value event listener method
+                 ImageStore.downloadUrl.addOnSuccessListener { uri ->
+                     //Glide.with(this@AddMemberActivity).load(uri).into(picture)
+                     val picture = ImageStore.toString()
+                 }
+                     // we are use add value event listener method
                  // which is called with database reference.
                  firebaseDatabase.addValueEventListener(object : ValueEventListener {
                      override fun onDataChange(snapshot: DataSnapshot) {
@@ -153,7 +152,6 @@ class AddMemberActivity : AppCompatActivity() {
                          Toast.makeText(this@AddMemberActivity, "Fail to add data $error", Toast.LENGTH_SHORT).show()
                      }
                  })
-                 }
             }
             }
         }
