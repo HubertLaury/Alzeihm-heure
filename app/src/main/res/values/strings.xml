@@ -19,7 +19,7 @@
     <string name="register">Créer un compte</string>
     <string name="login">S\'enregistrer</string>
     <string name="date">Date</string>
-    <string name="event">Ajouter un évênement</string>
+    <string name="btnEvent">Ajouter un évênement</string>
     <string name="add">Ajouter</string>
     <string name="motif">Motif</string>
     <string name="description">Description</string>
@@ -28,4 +28,5 @@
     <string name="pompier">pompier</string>
     <string name="police">police</string>
     <string name="samu">samu</string>
+    <string name="Event">évênement</string>
 </resources>

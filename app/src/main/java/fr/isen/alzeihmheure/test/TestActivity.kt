@@ -1,146 +1,60 @@
 package fr.isen.alzeihmheure.test
 
+import android.R
+import android.content.ContentUris
 import android.content.Intent
-import android.graphics.BitmapFactory
 import android.net.Uri
 import android.os.Bundle
-import android.util.Log
+import android.provider.CalendarContract
 import android.view.View
-import android.webkit.MimeTypeMap
-import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
-import com.google.android.gms.tasks.Continuation
-import com.google.android.gms.tasks.Task
-import com.google.firebase.firestore.FirebaseFirestore
-import com.google.firebase.storage.FirebaseStorage
-import com.google.firebase.storage.StorageReference
-import com.google.firebase.storage.UploadTask
-import fr.isen.alzeihmheure.R
+import com.applandeo.materialcalendarview.CalendarView
+import com.applandeo.materialcalendarview.EventDay
+import com.applandeo.materialcalendarview.listeners.OnDayClickListener
 import fr.isen.alzeihmheure.databinding.ActivityTestBinding
-import java.io.FileNotFoundException
-import java.io.InputStream
 import java.util.*
+
 
 class TestActivity : AppCompatActivity() {
     private lateinit var binding: ActivityTestBinding
-    private lateinit var buttonChoix: Button
-    private lateinit var buttonUpload: Button
-    private var filePath: Uri? = null
-    private var imageView: ImageView? = null
-    private var format: TextView? = null
-    val RESULT_LOAD_IMG = 1
-    private var firebaseStore: FirebaseStorage? = null
-    private var storageReference: StorageReference? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
-
-        firebaseStore = FirebaseStorage.getInstance()
-        storageReference = FirebaseStorage.getInstance().reference
-
         super.onCreate(savedInstanceState)
         binding = ActivityTestBinding.inflate(layoutInflater)
         setContentView(binding.root)
-
-        buttonChoix = findViewById(R.id.buttonChoix)
-        buttonUpload = findViewById(R.id.buttonUpload)
-        imageView = findViewById(R.id.imageView)
-        format = findViewById(R.id.format)
-
-
-        val editText = findViewById<EditText>(R.id.nom)
-
-        binding.buttonChoix.setOnClickListener(object : View.OnClickListener {
-            override fun onClick(v: View?) {
-                val name: String = editText.getText().toString()
-                binding.format.setText(name)
-                selectPicture()
-            }
-        })
-
-        binding.buttonUpload.setOnClickListener { uploadImage() }
     }
 
-
-
-    private fun addUploadRecordToDb(uri: String){
-        val db = FirebaseFirestore.getInstance()
-
-        val data = HashMap<String, Any>()
-        data["imageUrl"] = uri
-
-        db.collection("uploads/")
-                .add(data)
-                .addOnSuccessListener { documentReference ->
-                    Toast.makeText(this, "Saved to DB", Toast.LENGTH_LONG).show()
-                }
-                .addOnFailureListener { e ->
-                    Toast.makeText(this, "Error saving to DB", Toast.LENGTH_LONG).show()
-                }
+    fun AddCalendarEvent(view: View?) {
+        val calendarEvent = Calendar.getInstance()
+        val i = Intent(Intent.ACTION_EDIT)
+        i.type = "vnd.android.cursor.item/event"
+        i.data = CalendarContract.Events.CONTENT_URI
+        i.putExtra("beginTime", calendarEvent.timeInMillis)
+        i.putExtra("allDay", true)
+        i.putExtra("rule", "FREQ=YEARLY")
+        i.putExtra("endTime", calendarEvent.timeInMillis + 60 * 60 * 1000)
+        i.putExtra("title", "Calendar Event")
+        startActivity(i)
     }
 
-    private fun uploadImage(){
-        if(filePath != null){
-            val name: String = binding.nom.text.toString()+"."+GetFileExtension(filePath)
+    fun getEventIdList(view: View) {
+        // 7 derniers chiffres pour l'heure
+        // 6 premiers chiffres pour date
+        //val CALENDAR_EVENT_TIME = 1546300800000 // 2019-01-01 00:00:00
+        //val CALENDAR_EVENT_TIME = 1546400800000 // 2019-01-02 00:00:00
+        //val CALENDAR_EVENT_TIME = 1547300800000 // 2019-01-12 00:00:00
+        //val CALENDAR_EVENT_TIME = 1556300800000 // 2019-04-26 00:00:00
+        //val CALENDAR_EVENT_TIME = 1646300800000 // 2022-03-03 00:00:00
+        val CALENDAR_EVENT_TIME = 1619820000000 // 05-01-2021 00:00:00
 
-            val ref = storageReference?.child("uploads/"+name)
-            val uploadTask = ref?.putFile(filePath!!)
+        // Part 1: URI construction
+        val builder = CalendarContract.CONTENT_URI.buildUpon().appendPath("time")
+        ContentUris.appendId(builder, CALENDAR_EVENT_TIME)
+        val uri = builder.build() // Log: content://com.android.calendar/time/1619820000000
 
-            val urlTask = uploadTask?.continueWithTask(Continuation<UploadTask.TaskSnapshot, Task<Uri>> { task ->
-                if (!task.isSuccessful) {
-                    task.exception?.let {
-                        Log.d("URL", ref.downloadUrl.toString())
-                        throw it
-
-                    }
-                }
-                return@Continuation ref.downloadUrl
-            })?.addOnCompleteListener { task ->
-                if (task.isSuccessful) {
-                    val downloadUri = task.result
-                    addUploadRecordToDb(downloadUri.toString())
-                } else {
-                    // Handle failures
-                }
-            }?.addOnFailureListener{
-
-            }
-        }else{
-            Toast.makeText(this, "Please Upload an Image", Toast.LENGTH_SHORT).show()
-        }
-    }
-
-    fun GetFileExtension(uri: Uri?): String? {
-        val contentResolver = contentResolver
-        val mimeTypeMap = MimeTypeMap.getSingleton()
-
-        // Returning the file Extension.
-        return mimeTypeMap.getExtensionFromMimeType(contentResolver.getType(uri!!))
-    }
-
-    private fun selectPicture() {
-        val photoPickerIntent = Intent(Intent.ACTION_PICK)
-        photoPickerIntent.type = "image/*"
-        intent.setAction(Intent.ACTION_GET_CONTENT)
-        startActivityForResult(photoPickerIntent, RESULT_LOAD_IMG)
-    }
-
-    override fun onActivityResult(reqCode: Int, resultCode: Int, data: Intent?) {
-
-        super.onActivityResult(reqCode, resultCode, data)
-        if (resultCode == RESULT_OK) {
-            try {
-                val imageUri: Uri? = data?.data
-                val imageStream: InputStream? = imageUri?.let { contentResolver.openInputStream(it) }
-                val selectedImage = BitmapFactory.decodeStream(imageStream)
-                imageView!!.setImageBitmap(selectedImage)
-                filePath = data?.data
-
-            } catch (e: FileNotFoundException) {
-                e.printStackTrace()
-                Toast.makeText(applicationContext, "Une erreur s'est produite", Toast.LENGTH_LONG).show()
-            }
-        } else {
-            Toast.makeText(applicationContext, "Vous n'avez pas choisi d'image", Toast.LENGTH_LONG).show()
-        }
+        // Part 2: Set Intent action to Intent.ACTION_VIEW
+        val intent = Intent(Intent.ACTION_VIEW)
+                .setData(uri)
+        startActivity(intent)
     }
 }

@@ -14,6 +14,7 @@ import com.google.firebase.auth.FirebaseUser
 import fr.isen.alzeihmheure.MainActivity
 import fr.isen.alzeihmheure.databinding.ActivityRegisterBinding
 import fr.isen.alzeihmheure.login.LoginActivity
+import java.util.*
 
 class RegisterActivity : AppCompatActivity() {
     private lateinit var binding: ActivityRegisterBinding
@@ -95,7 +96,9 @@ class RegisterActivity : AppCompatActivity() {
                     val telephone: String = binding.telephone.text.toString().trim { it <= ' ' }
                     val adresse: String = binding.adresse.text.toString().trim { it <= ' ' }
                     val password: String = binding.password.text.toString().trim { it <= ' ' }
-                    val code: String = binding.code.text.toString().trim { it <= ' ' }
+                    val randomGenerator = Random()
+                    val randomint: Int = randomGenerator.nextInt(9999)
+                    val code : String = binding.code.setText(""+randomint).toString().trim { it <= ' ' }
 
                     //utilisation de firebase
                     FirebaseAuth.getInstance().createUserWithEmailAndPassword(email, password)
@@ -123,6 +126,7 @@ class RegisterActivity : AppCompatActivity() {
                                 intent.putExtra("telephone_id", telephone)
                                 intent.putExtra("adresse_id", adresse)
                                 intent.putExtra("password_id", password)
+                                intent.putExtra("code_id", code)
                                 startActivity(intent)
                                 finish()
                             } else {

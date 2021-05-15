@@ -7,36 +7,57 @@
     android:padding="8dp"
     tools:context=".calendar.CalendarActivity">
 
-    <CalendarView
-        android:id="@+id/viewCalender"
+    <ScrollView
+        android:id="@+id/scroll"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@+id/event"
-        android:layout_centerHorizontal="true"
-        android:layout_marginStart="24dp"
-        android:layout_marginTop="6dp"
-        android:layout_marginEnd="24dp"
-        android:layout_marginBottom="200dp"
-        app:layout_constraintTop_toBottomOf="@+id/event" />
-
-    <Button
-        android:id="@+id/event"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:onClick="AddCalendarEvent"
-        android:text="@string/event" />
-
-    <TextView
-        android:id="@+id/date"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_marginBottom="120dp"
-        android:text="@string/date"
-        android:textAlignment="center"
-        android:textSize="45sp"
-        android:visibility="visible"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/viewCalender" />
+        app:layout_constraintTop_toTopOf="parent">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <Button
+            android:id="@+id/btnEvent"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:onClick="AddCalendarEvent"
+            android:text="@string/btnEvent" />
+
+        <Button
+            android:id="@+id/Event"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:onClick="getEventIdList"
+            android:text="@string/Event" />
+
+        <CalendarView
+            android:id="@+id/viewCalender"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="6dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginBottom="16dp"
+            app:layout_constraintTop_toBottomOf="@+id/event" />
+
+
+        <TextView
+            android:id="@+id/date"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/date"
+            android:textAlignment="center"
+            android:textSize="45sp"
+            android:visibility="visible"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
+
+    </LinearLayout>
+    </ScrollView>
+
 </RelativeLayout>

@@ -10,6 +10,8 @@ import android.view.View
 import android.webkit.MimeTypeMap
 import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.net.toUri
+import androidx.core.text.htmlEncode
 import com.bumptech.glide.Glide
 import com.google.android.gms.tasks.Continuation
 import com.google.android.gms.tasks.Task
@@ -18,6 +20,7 @@ import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.StorageReference
 import com.google.firebase.storage.UploadTask
+import fr.isen.alzeihmheure.MainActivity
 import fr.isen.alzeihmheure.R
 import fr.isen.alzeihmheure.calendar.CalendarActivity
 import fr.isen.alzeihmheure.databinding.ActivityAddMemberBinding
@@ -61,7 +64,6 @@ class AddMemberActivity : AppCompatActivity() {
         })
 
         binding.btnUpload.setOnClickListener {
-            this@AddMemberActivity
             uploadImage()
         }
 
@@ -84,6 +86,14 @@ class AddMemberActivity : AppCompatActivity() {
                             Toast.LENGTH_SHORT
                     ).show()
                 }
+                //si rien est saisie pour l'adresse on affiche un message grace à un toast
+                TextUtils.isEmpty(binding.adresse.text.toString().trim { it <= ' ' }) -> {
+                    Toast.makeText(
+                            this@AddMemberActivity,
+                            "Veuillez saisir votre adresse",
+                            Toast.LENGTH_SHORT
+                    ).show()
+                }
                 //s'il manque l'adresse mail
                 TextUtils.isEmpty(binding.email.text.toString().trim { it <= ' ' }) -> {
                     Toast.makeText(
@@ -97,14 +107,6 @@ class AddMemberActivity : AppCompatActivity() {
                     Toast.makeText(
                             this@AddMemberActivity,
                             "Veuillez saisir votre numéro de téléphone",
-                            Toast.LENGTH_SHORT
-                    ).show()
-                }
-                //si rien est saisie pour l'adresse on affiche un message grace à un toast
-                TextUtils.isEmpty(binding.adresse.text.toString().trim { it <= ' ' }) -> {
-                    Toast.makeText(
-                            this@AddMemberActivity,
-                            "Veuillez saisir votre adresse",
                             Toast.LENGTH_SHORT
                     ).show()
                 }
@@ -122,21 +124,22 @@ class AddMemberActivity : AppCompatActivity() {
                  // getting text from our edittext fields.
                  val firebaseDatabase = FirebaseDatabase.getInstance().getReference("users/")
                  val uploadId = firebaseDatabase.push().key
-                 val firstname: String = binding.firstname.text.toString()
-                 val lastname: String = binding.lastname.text.toString()
-                 val adresse: String = binding.adresse.text.toString()
-                 val email: String = binding.email.text.toString()
-                 val telephone: String = binding.telephone.text.toString()
+                 val firstname: String = binding.firstname.text.toString().trim { it <= ' ' }
+                 val lastname: String = binding.lastname.text.toString().trim { it <= ' ' }
+                 val adresse: String = binding.adresse.text.toString().trim { it <= ' ' }
+                 val email: String = binding.email.text.toString().trim { it <= ' ' }
+                 val telephone: String = binding.telephone.text.toString().trim { it <= ' ' }
                  val name: String = binding.nom.text.toString()+"."+getFileExtension(filePath)
-                 val ImageStore = storageReference!!.child("uploads/$name").getDownloadUrl()
-                         ImageStore.addOnSuccessListener {
+                 val ImageStore = storageReference!!.child("uploads/$name")
+                     /*    ImageStore.addOnSuccessListener { uri ->
                      val ref: String = ImageStore.toString()
+
                      firebaseDatabase.addValueEventListener(object : ValueEventListener {
                          override fun onDataChange(snapshot: DataSnapshot) {
                              // inside the method of on Data change we are setting
                              // our object class to our database reference.
                              // data base reference will sends data to firebase.
-                             val user = User(firstname, lastname, email, telephone, adresse, ref)
+                             val user = User(firstname, lastname, adresse, email, telephone, ref)
                              firebaseDatabase.child(uploadId!!).setValue(user)
 
                              // after adding this data we are showing toast message.
@@ -149,31 +152,27 @@ class AddMemberActivity : AppCompatActivity() {
                              Toast.makeText(this@AddMemberActivity, "Fail to add data $error", Toast.LENGTH_SHORT).show()
                          }
                      })
-                 }
+                 }*/
 
-                 ImageStore.addOnSuccessListener {
+                 ImageStore.getDownloadUrl().addOnSuccessListener {
+                     firebaseDatabase.addValueEventListener(object : ValueEventListener {
+                         override fun onDataChange(snapshot: DataSnapshot) {
+                             // inside the method of on Data change we are setting
+                             // our object class to our database reference.
+                             // data base reference will sends data to firebase.
+                             val user = User(firstname, lastname, adresse, email, telephone, "https://firebasestorage.googleapis.com/v0/b/alzheimheure.appspot.com/o/uploads%2Fserp.jpg?alt=media&token=03643b25-6f1f-49cf-af49-8fd6a73b535f")
+                             firebaseDatabase.child(uploadId!!).setValue(user)
 
+                             // after adding this data we are showing toast message.
+                             Toast.makeText(this@AddMemberActivity, "data added", Toast.LENGTH_SHORT).show()
+                         }
 
-                 // we are use add value event listener method
-                 // which is called with database reference.
-                 firebaseDatabase.addValueEventListener(object : ValueEventListener {
-                     override fun onDataChange(snapshot: DataSnapshot) {
-                         // inside the method of on Data change we are setting
-                         // our object class to our database reference.
-                         // data base reference will sends data to firebase.
-                         val user = User(firstname, lastname, email, telephone, adresse, "https://firebasestorage.googleapis.com/v0/b/alzheimheure.appspot.com/o/uploads%2Fdrtfj.jpg?alt=media&token=b2e08db1-ff8b-4e4c-96ac-2352a299064d")
-                         firebaseDatabase.child(uploadId!!).setValue(user)
-
-                         // after adding this data we are showing toast message.
-                         Toast.makeText(this@AddMemberActivity, "data added", Toast.LENGTH_SHORT).show()
-                     }
-
-                     override fun onCancelled(error: DatabaseError) {
-                         // if the data is not added or it is cancelled then
-                         // we are displaying a failure toast message.
-                         Toast.makeText(this@AddMemberActivity, "Fail to add data $error", Toast.LENGTH_SHORT).show()
-                     }
-                 })
+                         override fun onCancelled(error: DatabaseError) {
+                             // if the data is not added or it is cancelled then
+                             // we are displaying a failure toast message.
+                             Toast.makeText(this@AddMemberActivity, "Fail to add data $error", Toast.LENGTH_SHORT).show()
+                         }
+                     })
                  }
             }
             }
