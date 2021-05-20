@@ -23,6 +23,11 @@ class RegisterActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityRegisterBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+        val randomGenerator = Random()
+        val randomint: Int = randomGenerator.nextInt(999999)
+        binding.code.setText("Code : " + randomint)
+
         // si on clique sur le bouton 's inscrire' on exécute le code suivant
         binding.btnLogin.setOnClickListener {
             val intent = Intent(this, LoginActivity::class.java)
@@ -79,14 +84,6 @@ class RegisterActivity : AppCompatActivity() {
                             Toast.LENGTH_SHORT
                     ).show()
                 }
-                //s'il manque le code
-                TextUtils.isEmpty(binding.code.text.toString().trim { it <= ' ' }) -> {
-                    Toast.makeText(
-                            this@RegisterActivity,
-                            "Veuillez saisir votre mot de passe",
-                            Toast.LENGTH_SHORT
-                    ).show()
-                }
                 //si rien n'est vide
                 else -> {
                     //on l'utilisateur à mit un espace en trop on l'enlève
@@ -96,9 +93,6 @@ class RegisterActivity : AppCompatActivity() {
                     val telephone: String = binding.telephone.text.toString().trim { it <= ' ' }
                     val adresse: String = binding.adresse.text.toString().trim { it <= ' ' }
                     val password: String = binding.password.text.toString().trim { it <= ' ' }
-                    val randomGenerator = Random()
-                    val randomint: Int = randomGenerator.nextInt(9999)
-                    val code : String = binding.code.setText(""+randomint).toString().trim { it <= ' ' }
 
                     //utilisation de firebase
                     FirebaseAuth.getInstance().createUserWithEmailAndPassword(email, password)
@@ -126,7 +120,6 @@ class RegisterActivity : AppCompatActivity() {
                                 intent.putExtra("telephone_id", telephone)
                                 intent.putExtra("adresse_id", adresse)
                                 intent.putExtra("password_id", password)
-                                intent.putExtra("code_id", code)
                                 startActivity(intent)
                                 finish()
                             } else {

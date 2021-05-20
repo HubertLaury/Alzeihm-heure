@@ -160,7 +160,7 @@ class AddMemberActivity : AppCompatActivity() {
                              // inside the method of on Data change we are setting
                              // our object class to our database reference.
                              // data base reference will sends data to firebase.
-                             val user = User(firstname, lastname, adresse, email, telephone, "https://firebasestorage.googleapis.com/v0/b/alzheimheure.appspot.com/o/uploads%2Fserp.jpg?alt=media&token=03643b25-6f1f-49cf-af49-8fd6a73b535f")
+                             val user = User(firstname, lastname, adresse, email, telephone, "https://firebasestorage.googleapis.com/v0/b/alzheimheure.appspot.com/o/uploads%2Fmontagne%20.jpg?alt=media&token=6d94abaf-b452-44e6-b04d-e0348552429f")
                              firebaseDatabase.child(uploadId!!).setValue(user)
 
                              // after adding this data we are showing toast message.
